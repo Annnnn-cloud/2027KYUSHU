@@ -458,8 +458,8 @@ body{font:400 14px/1.8 var(--sans);letter-spacing:.02em}
 <section class="famsw" aria-label="切換家庭">
   <div class="famsw-hint">CHOOSE YOUR FAMILY ITINERARY</div>
   <div class="famsw-row">
-    <button type="button" class="fam" data-f="liu" aria-pressed="false"><span class="fam-en">LIU FAMILY</span><small>MAR 13 — MAR 21, 2027</small></button>
-    <button type="button" class="fam" data-f="pan" aria-pressed="false"><span class="fam-en">PAN FAMILY</span><small>MAR 16 — MAR 21, 2027</small></button>
+    <button type="button" class="fam" data-f="liu" aria-pressed="false"><span class="fam-en">LIU FAMILY</span><small>MAR 13 — MAR 21</small></button>
+    <button type="button" class="fam" data-f="pan" aria-pressed="false"><span class="fam-en">PAN FAMILY</span><small>MAR 16 — MAR 21</small></button>
   </div>
 </section>
 
@@ -568,9 +568,12 @@ const HOTELS = {
   'Cross Life 博多天神':{address:'',phone:'',checkin:'',checkout:'',nav:'Cross Life 博多天神'}
 };
 
-// 景點縮圖：'景點名稱':'圖片網址'。名稱要與行程卡片上的名稱完全一致。目前都留空（不顯示縮圖）。
+// 景點縮圖：'景點名稱':'圖片網址'。名稱要與行程卡片上的名稱完全一致。
 const STOP_IMAGES = {
   // '熊本城': 'https://…',
+  '上色見熊野座神社': 'https://reurl.cc/0k3vDA',
+  // 如果未來還有其他景點，可以繼續往下加：
+  // '阿蘇山': 'https://...',
 };
 
 const FAMILY_DATA = {
@@ -585,7 +588,7 @@ liu:{
   {date:'2027-03-13', wd:'六', title:'抵達熊本・阿蘇', hotel:'熊本市區（飯店待補）', notes:[], stops:[
     {name:'熊本機場抵達', tag:'班機', time:'10:35', note:'10:35 抵達熊本機場', nav:false, ll:[32.8373,130.8551]},
     {name:'租車取車', tag:'租車', time:'12:00', duration:'30分鐘', drive:'60分鐘',note:'預估 12:00 租車（取車地點待補）', nav:false},
-    {name:'上色見熊野座神社', type:'main', duration:'120分鐘', drive:'20分鐘',note:'動漫電影「螢火之森」與「夏目友人帳」的靈感取景地點', nav:'上色見熊野座神社',img:'https://reurl.cc/0k3vDA'},
+    {name:'上色見熊野座神社', type:'main', duration:'120分鐘', drive:'20分鐘',note:'動漫電影「螢火之森」與「夏目友人帳」的靈感取景地點', nav:'上色見熊野座神社'},
     {name:'草千里', type:'flex', duration:'90分鐘', drive:'60分鐘',nav:'草千里ヶ浜', ll:[32.8833,131.0833]}
   ]},
   {date:'2027-03-14', wd:'日', title:'天草親子日', hotel:'天草市（飯店待補）', notes:[], stops:[
