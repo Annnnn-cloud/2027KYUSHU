@@ -797,6 +797,47 @@ details.ov-wrap:not([open]) .ov-small-close{display:none}
 .tax-linkrow{margin-top:12px;font-size:12px;line-height:1.9;color:var(--soft)}
 .tax-linkrow a{margin-right:2px}
 .tax-linkrow i{font-style:normal;color:var(--mute);margin:0 6px}
+
+/* ===== 停車資訊／醫療應急資訊：配色與文字層次微調 =====
+   梅棕 #55433F　灰綠 #465D4E　霧櫻粉 #D5BDBB　燕麥 #EBE6DC　暖灰棕 #70605B */
+#parkingModal h2,#medicalModal h2{color:#55433F}
+#parkingModal .attraction-day,#medicalModal .attraction-day{color:#465D4E;font-weight:600;letter-spacing:.14em;border-bottom-color:#D6CBBE}
+#parkingModal .parking-section,#medicalModal .parking-section{border-bottom-color:#E6DED3}
+#parkingModal .parking-title,#medicalModal .parking-title{color:#55433F;font-weight:600}
+#parkingModal .parking-item,#medicalModal .parking-item{color:#70605B}
+#parkingModal .parking-main,#medicalModal .parking-main{color:#64524D}
+#parkingModal .lnk,#medicalModal .lnk{color:#465D4E;text-decoration-color:#B5BBAA}
+#parkingModal .note-block,#medicalModal .note-block{background:#EBE6DC;border-left:3px solid #D5BDBB;color:#64524D}
+.tip-title{display:block;margin-bottom:4px;font:600 14.5px/1.6 var(--serif);letter-spacing:.1em;color:#55433F}
+/* 停車：Day／日期／景點名稱 三層 */
+.pk-day{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 10px}
+.pk-n{font:600 13px/1.6 var(--sans);letter-spacing:.16em;color:#465D4E}
+.pk-date{font:500 12.5px/1.6 var(--sans);letter-spacing:.08em;color:#8E6E69}
+.pk-ttl{font:600 14px/1.6 var(--serif);letter-spacing:.06em;color:#55433F}
+/* 醫療 */
+#medicalModal .attraction-section{margin-bottom:34px}
+#medicalModal .parking-section{border-bottom-color:rgba(213,189,187,.6)}
+#medicalModal .parking-item strong{color:#64524D;font-weight:500}
+#medicalModal .parking-item strong.med-key{color:#55433F;font-weight:600}
+.med-emg{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 8px;padding:2px 0 6px}
+.med-num{font:600 16px/1.6 var(--sans);letter-spacing:.04em;color:#465D4E}
+.med-lbl{font-size:12.5px;color:#70605B;margin-right:10px}
+.med-sub{flex-basis:100%;font-size:11.5px;color:#9A8C86}
+.med-warn{margin:6px 0;padding-left:10px;border-left:2px solid #D5BDBB}
+
+/* ===== 景點資訊：同步配色與文字層次 ===== */
+#infoModal h2{color:#55433F}
+#infoModal .attraction-day{color:#465D4E;font-weight:600;letter-spacing:.14em;border-bottom-color:#D6CBBE}
+#infoModal .attraction-item{border-bottom-color:#E6DED3}
+#infoModal .attraction-name{color:#55433F;font-weight:600}
+#infoModal .attraction-details{color:#70605B}
+#infoModal .attraction-details .k{color:#8E6E69;font-weight:500}
+#infoModal .lnk,#infoModal .attraction-details a{color:#465D4E;text-decoration-color:#B5BBAA}
+#infoModal .note-block{background:#EBE6DC;border-left:3px solid #D5BDBB;color:#64524D}
+#infoModal .ov-ttl b{color:#55433F}
+#infoModal .ov-date .dn{color:#465D4E}
+#infoModal .ov-date .dd{color:#55433F}
+#infoModal .ov-date .dw{color:#70605B}
 </style>
 </head>
 <body>
@@ -939,7 +980,7 @@ details.ov-wrap:not([open]) .ov-small-close{display:none}
 <div id="a2hsModal" class="modal-bg"><div class="modal"><button class="modal-close" data-close type="button" aria-label="關閉"><svg class="i" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
   <h2>如何加入手機主畫面?</h2><div class="a2-lead">加入後，行程會像 App 一樣出現在桌面，一點就打開。</div>
   <div class="attraction-day">iPhone ・ SAFARI</div>
-  <ol class="a2-steps"><li><b>用 Safari 開啟本頁</b>其他瀏覽器的選單位置不同，建議使用 Safari。</li><li><b>點「分享」圖示</b>位於畫面下方或網址列旁，是帶向上箭頭的方形 <svg class="i sh" viewBox="0 0 24 24"><path d="M12 15V3M8 7l4-4 4 4M5 11v8a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-8"/></svg>。*若沒看到，請先點選單裡的「⋯」。</li><li><b>向下滑，點「加入主畫面」</b>選單中找 <svg class="i sh" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M12 8v8M8 12h8"/></svg> 加入主畫面。確認名稱後(可自行修改)點「加入」即完成。</li></ol>
+  <ol class="a2-steps"><li><b>用 Safari 開啟本頁</b>其他瀏覽器的選單位置不同，建議使用 Safari。</li><li><b>點右下角「⋯」，再點「分享」</b>先點畫面右下角的 <svg class="i sh" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.3" fill="currentColor"/><circle cx="12" cy="12" r="1.3" fill="currentColor"/><circle cx="19" cy="12" r="1.3" fill="currentColor"/></svg>，在展開的選單中點 <svg class="i sh" viewBox="0 0 24 24"><path d="M12 15V3M8 7l4-4 4 4M5 11v8a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-8"/></svg> 分享。</li><li><b>點「檢視更多」，再點「加入主畫面」</b>在分享選單中，點右下角扁平向下的 <svg class="i sh" viewBox="0 0 24 24"><path d="M3 9.5l9 5.5 9-5.5"/></svg>（檢視更多），接著找到並點 <svg class="i sh" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M12 8v8M8 12h8"/></svg> 加入主畫面。確認名稱後（可自行修改）點「加入」即完成。</li></ol>
   <div class="attraction-day" style="margin-top:28px">ANDROID ・ CHROME</div>
   <ol class="a2-steps"><li><b>點右上角「⋮」</b>選擇「加到主畫面」或「安裝應用程式」，再點「新增」。</li></ol>
   <div class="note-block">想更換已加入的圖示，請先長按主畫面上的舊圖示將它移除，再重新加入一次。圖示只會在加入的當下讀取。</div></div></div>
@@ -1513,7 +1554,7 @@ function copyText(t,btn){
 function showInfo(){
   const secs=days().map((d,i)=>{
     const rows=d.all.filter(s=>s.detail&&s.detail.length);
-    return rows.length?`<div class="attraction-section"><div class="attraction-day">Day ${i+1}（${fmtDate(d.date).replace('.','/')}）${esc(d.title)}</div>${rows.map(s=>`<div class="attraction-item"><div class="attraction-name">${esc(plain(s.name))}</div><div class="attraction-details">${s.detail.map(r=>`<div><span class="k">${esc(r[0])}</span>${linkify(r[1])}</div>`).join('')}</div></div>`).join('')}</div>`:'';
+    return rows.length?`<div class="attraction-section"><div class="attraction-day pk-day"><span class="pk-n">Day ${i+1}</span><span class="pk-date">${fmtDate(d.date).replace('.','/')}（${esc(d.wd)}）</span><span class="pk-ttl">${esc(d.title)}</span></div>${rows.map(s=>`<div class="attraction-item"><div class="attraction-name">${esc(plain(s.name))}</div><div class="attraction-details">${s.detail.map(r=>`<div><span class="k">${esc(r[0])}</span>${linkify(r[1])}</div>`).join('')}</div></div>`).join('')}</div>`:'';
   }).join('');
   document.getElementById('infoBody').innerHTML=overviewHtml()+'<div class="note-block" style="margin-top:0;margin-bottom:22px">以下為網路整理的初稿（2026 年資料），價格與時間每年可能調整。<br>2026/7/28 熊本地震後，部分道路與景點可能仍有管制或調整營業，出發前請再查官方公告。</div>'+(secs||'<div class="empty">還沒有景點營業資訊。把景點的 detail 欄位填好，就會自動出現在這裡（也會出現在行程卡片的「景點資訊」）。</div>');
   const oc=document.getElementById('ovCopy'); if(oc) oc.onclick=()=>copyText(overviewText(),oc);
@@ -1522,9 +1563,9 @@ function showInfo(){
 function showParking(){
   const secs=days().map((d,i)=>{
     const rows=d.all.filter(s=>s.parking);
-    return rows.length?`<div class="attraction-section"><div class="attraction-day">Day ${i+1}（${fmtDate(d.date).replace('.','/')}）${esc(d.title)}</div>${rows.map(s=>`<div class="parking-section"><div class="parking-title">${esc(plain(s.name))}</div><div class="parking-item">${linkify(s.parking)}</div></div>`).join('')}</div>`:'';
+    return rows.length?`<div class="attraction-section"><div class="attraction-day pk-day"><span class="pk-n">Day ${i+1}</span><span class="pk-date">${fmtDate(d.date).replace('.','/')}（${esc(d.wd)}）</span><span class="pk-ttl">${esc(d.title)}</span></div>${rows.map(s=>`<div class="parking-section"><div class="parking-title">${esc(plain(s.name))}</div><div class="parking-item">${linkify(s.parking)}</div></div>`).join('')}</div>`:'';
   }).join('');
-  document.getElementById('parkingBody').innerHTML=`<div class="note-block" style="margin-top:0;margin-bottom:28px"><strong>停車小提醒</strong><br>— 週末與連假停車位容易滿，建議提早出發<br>— 部分景點可用「ParkingOne」等 App 預約停車位<br>— 走高速公路建議租車時加辦 ETC 卡<br>— 以下停車資料為網路整理（2026 年），GO 導航到景點本身，停車場以現場標示為準；熊本地震後部分道路與設施可能管制，出發前請查最新公告</div>`+(secs||'<div class="empty">各景點的停車資訊還沒填。把景點的 parking 欄位填好，就會自動出現在這裡。</div>');
+  document.getElementById('parkingBody').innerHTML=`<div class="note-block" style="margin-top:0;margin-bottom:28px"><span class="tip-title">停車小提醒</span>— 週末與連假停車位容易滿，建議提早出發<br>— 部分景點可用「ParkingOne」等 App 預約停車位<br>— 走高速公路建議租車時加辦 ETC 卡<br>— 以下停車資料為網路整理（2026 年），GO 導航到景點本身，停車場以現場標示為準；熊本地震後部分道路與設施可能管制，出發前請查最新公告</div>`+(secs||'<div class="empty">各景點的停車資訊還沒填。把景點的 parking 欄位填好，就會自動出現在這裡。</div>');
   openModal('parkingModal');
 }
 function showMedical(){
@@ -1533,25 +1574,25 @@ function showMedical(){
   const A=(h,t)=>`<a class="lnk" href="${h}" target="_blank" rel="noopener noreferrer">${t||h}</a>`;
   document.getElementById('medicalBody').innerHTML=`
   <div class="attraction-section"><div class="attraction-day">緊急聯絡（福岡・大分・熊本）</div><div class="parking-section">
-    <div class="parking-item"><strong>🚑 救護車／火警：119</strong>　<strong>🚓 警察：110</strong>（24 小時、免費）</div>
-    <div class="parking-item"><strong>📞 Japan Visitor Hotline：</strong>050-3816-2787（日本政府觀光局，24 小時，可中文，協助找醫院與緊急狀況）</div>
+    <div class="parking-item med-emg"><span class="med-num">🚑 119</span><span class="med-lbl">救護車／火警</span><span class="med-num">🚓 110</span><span class="med-lbl">警察</span><span class="med-sub">24 小時・免費</span></div>
+    <div class="parking-item"><strong class="med-key">📞 Japan Visitor Hotline：</strong>050-3816-2787（日本政府觀光局，24 小時，可中文，協助找醫院與緊急狀況）</div>
     <div class="parking-item"><strong>🏥 找可中／英文的醫院：</strong>${A('https://www.jnto.go.jp/emergency/chc/mi_guide.html','JNTO 醫療機構查詢')}</div>
-    <div class="parking-item"><strong>🇹🇼 外交部急難救助：</strong>+886-800-085-095（從日本撥台灣，24 小時）；${A('https://www.boca.gov.tw/','官網')}</div>
+    <div class="parking-item"><strong class="med-key">🇹🇼 外交部急難救助：</strong>+886-800-085-095（從日本撥台灣，24 小時）；${A('https://www.boca.gov.tw/','官網')}</div>
   </div></div>
   <div class="attraction-section"><div class="attraction-day">駐日外交單位（中文協助）</div>
-    <div class="parking-section"><div class="parking-title">台北駐福岡辦事處（福岡分處）</div><div class="parking-main">九州最近的駐外據點（正式名稱：台北駐大阪經濟文化辦事處福岡分處）</div><div class="parking-item"><strong>地址：</strong>福岡縣福岡市中央區櫻坂3-12-42</div><div class="parking-item"><strong>電話：</strong>+81-92-734-2810</div><div class="parking-item"><strong>緊急電話：</strong>+81-90-1922-9740（生命緊急安全）</div><div class="parking-item"><strong>服務時間：</strong>9:00～12:00，13:00～18:00（收件櫃台16:30止）</div><div class="parking-item"><strong>官網：</strong>${A('https://www.roc-taiwan.org/jpfuk/index.html','https://www.roc-taiwan.org/jpfuk/')}</div></div></div>
+    <div class="parking-section"><div class="parking-title">台北駐福岡辦事處（福岡分處）</div><div class="parking-main">九州最近的駐外據點（正式名稱：台北駐大阪經濟文化辦事處福岡分處）</div><div class="parking-item"><strong>地址：</strong>福岡縣福岡市中央區櫻坂3-12-42</div><div class="parking-item"><strong>電話：</strong>+81-92-734-2810</div><div class="parking-item"><strong class="med-key">緊急電話：</strong>+81-90-1922-9740（生命緊急安全）</div><div class="parking-item"><strong>服務時間：</strong>9:00～12:00，13:00～18:00（收件櫃台16:30止）</div><div class="parking-item"><strong>官網：</strong>${A('https://www.roc-taiwan.org/jpfuk/index.html','https://www.roc-taiwan.org/jpfuk/')}</div></div></div>
   <div class="attraction-section"><div class="attraction-day">保險參考</div><div class="parking-section"><div class="parking-title">東京海上日動（旅日旅客保險）</div><div class="parking-main">僅列出一個選項供參考，是否投保、選哪一家請大家自行評估比較</div>
     <div class="parking-item">• ${A('https://tokiomarinenichido.jp/zh-hant/china2/','官方網站')}；內容依方案而異，可涵蓋醫療、緊急轉院、行李遺失等</div>
     <div class="parking-item">• 就醫方式有兩種：自行看診、先墊付再申請理賠；或由保險客服協助安排，醫院直接向保險公司請款（客服約需 2 小時作業）</div>
     <div class="parking-item">• 客服電話：+81 3 6758 2444（網路資料，請以投保 email 為準）；選中文會轉接，須備妥投保資料</div></div></div>
   <div class="attraction-section"><div class="attraction-day">中文線上看診</div><div class="parking-section"><div class="parking-title">在線日本醫生 (OHDr.)</div><div class="parking-main">日本合法診所・可用 LINE 中文視訊看診（不是保險公司，看診費自付）</div>
     <div class="parking-item">• 繁體中文客服 <strong>09:00～22:00</strong>；深夜緊急狀況請直接叫救護車（119）</div>
-    <div class="parking-item">• <strong>訪日醫療支援方案</strong>（須「出發前」申請並付款，約 3 個工作天內寄付款連結）：1～7 天 <strong>550 日圓</strong>、8～15 天 1,100 日圓、16～30 天 1,650 日圓（${FAMILIES[fam].zh} 本行程 ${n} 天，屬 <strong>${plan}</strong>）</div>
+    <div class="parking-item med-warn">• <strong class="med-key">訪日醫療支援方案</strong>（須「出發前」申請並付款，約 3 個工作天內寄付款連結）：1～7 天 <strong>550 日圓</strong>、8～15 天 1,100 日圓、16～30 天 1,650 日圓（${FAMILIES[fam].zh} 本行程 ${n} 天，屬 <strong>${plan}</strong>）</div>
     <div class="parking-item">• 方案內容：醫療諮詢免費、優先看診、診斷書 4,200 日圓（非方案 20,600 日圓）、免費英文診斷書與收據一份（可供理賠）；另有 2～3 人同行的團體方案</div>
     <div class="parking-item">• 藥費另付藥局，領藥帶護照；兒童糖漿類藥品日本藥局常缺貨，建議<strong>自備孩子常備藥</strong></div>
     <div class="parking-item"><strong>官網：</strong>${A('https://oh-doctor.com/zh-tw/oh-traveler-dr-tw/')}　<span style="font-size:11.5px">費用與規則請以官網最新公告為準</span></div></div></div>
   <div class="attraction-section"><div class="attraction-day">租車應急聯絡</div><div class="parking-section"><div class="parking-item">租車公司與電話尚未提供 ${TBD}。車輛故障／無法準時還車／事故，請聯絡租車公司；<strong>發生事故請先通報警察 110</strong></div></div></div>
-  <div class="note-block"><strong>緊急就醫步驟</strong><br>1. 撥打 119（救護車）或 110（警察），或前往附近急診<br>2. 告知位置與症狀（英文或簡單日文）<br>3. 保存診斷書與醫療收據，供保險理賠<br>4. 需要中文協助：Japan Visitor Hotline 或駐福岡辦事處<br><br><strong>常用日文</strong><br>• 醫院：病院（びょういん）　• 救護車：救急車（きゅうきゅうしゃ）<br>• 我需要幫助：助けてください（たすけてください）</div>`;
+  <div class="note-block"><span class="tip-title">緊急就醫步驟</span>1. 撥打 119（救護車）或 110（警察），或前往附近急診<br>2. 告知位置與症狀（英文或簡單日文）<br>3. 保存診斷書與醫療收據，供保險理賠<br>4. 需要中文協助：Japan Visitor Hotline 或駐福岡辦事處<br><br><span class="tip-title">常用日文</span>• 醫院：病院（びょういん）　• 救護車：救急車（きゅうきゅうしゃ）<br>• 我需要幫助：助けてください（たすけてください）</div>`;
   
   openModal('medicalModal');
 }
