@@ -838,6 +838,14 @@ details.ov-wrap:not([open]) .ov-small-close{display:none}
 #infoModal .ov-date .dn{color:#465D4E}
 #infoModal .ov-date .dd{color:#55433F}
 #infoModal .ov-date .dw{color:#70605B}
+
+/* ===== 備案景點框 ===== */
+.backup-card{padding:18px 18px 16px;background:var(--paper);border:1px dashed #D5BDBB;border-radius:10px}
+.backup-card .name{color:#55433F;font-weight:500}
+.backup-card .tag{color:var(--soft)}
+.backup-card .card-bottom{margin-top:12px}
+.backup-card .go{background:var(--paper);border-color:var(--sage);color:var(--sage-d);box-shadow:none}
+.backup-card .go:active{background:var(--sage-l)}
 </style>
 </head>
 <body>
@@ -937,6 +945,7 @@ details.ov-wrap:not([open]) .ov-small-close{display:none}
 <div id="hotelDisplay"></div>
 <div id="insuranceReminder"></div>
 <section class="sec"><div class="sec-h"><span class="eyebrow">ITINERARY</span><span class="p" id="dayProgress"></span></div><div class="timeline" id="timeline"></div></section>
+<section class="sec" id="backupSec" hidden><div class="sec-h"><span class="eyebrow">BACKUP</span><span class="p">備案景點</span></div><div id="backupBox"></div></section>
 <section class="sec" id="notesSec" hidden><div class="sec-h"><span class="eyebrow">TODAY'S NOTES</span><span class="p">當日補充資訊</span></div><div id="dayNotes"></div></section>
 <section class="sec"><div class="sec-h"><span class="eyebrow">ROUTE MAP</span><span class="p">當日路線地圖</span></div>
   <p class="mapnote"><b>行程示意路線</b>：虛線只是依景點順序連起來的直線，<b>不是實際道路</b>。開車請以各景點的 GO 按鈕（Google Maps）為準。</p>
@@ -1062,6 +1071,7 @@ const PARK_NAV = {
   "久留米高良大社":["高良大社 駐車場","免費停車場"],
   "南藏院":["南蔵院 駐車場 篠栗","寺前免費停車場"],
   "宮地嶽神社":["宮地嶽神社 駐車場","免費停車場"],
+  "旦過市場":["古船場ワイドパーキング","古船場ワイドパーキング（步行約 3 分）",{alts:[["Times 小倉紺屋町第2（8 台，步行約 2 分）","タイムズ小倉紺屋町第2"],["中央第一駐車場（步行約 4 分）","中央第一駐車場 小倉"]]}],
   "小倉城":["勝山公園地下駐車場 北九州","勝山公園地下停車場"],
   "白野江植物公園":["白野江植物公園 駐車場","園內停車場"],
   "莊八幡神社":["庄八幡神社 駐車場 福岡県","神社附近停車場"],
@@ -1093,6 +1103,7 @@ const SPOT_INFO = {
   "久留米高良大社":{detail:[["營業時間","境內自由；授與所 9:00–15:30（祈禱受理 9:00–15:00）"],["費用","免費"],["建議停留","約 60 分鐘（含展望台）"],["特色","久留米市街夜景名所，本殿為國家重要文化財"],["資料來源","整理自日本旅遊網站與官方公告（2026 年資料），價格與時間可能調整，出發前請再確認官網"]],parking:"免費停車場約 300 台；上山道路彎多。"},
   "南藏院":{detail:[["參拜時間","約 9:00–16:30（各資料略有差異）"],["費用","外國旅客需付拜觀費約 300–500 日圓（資料不一，請現場確認）；涅槃像體內參拜 500 日圓"],["建議停留","約 45–60 分鐘"],["注意","篠栗四國八十八所總本寺，是祈禱場所，境內禁止邊走邊吃、吸菸飲酒，請保持肅靜"],["資料來源","整理自日本旅遊網站與官方公告（2026 年資料），價格與時間可能調整，出發前請再確認官網"]],parking:"寺前免費停車場約 10 台、車站側與第 2 免費停車場各約 10–15 台，滿了需停周邊收費停車場；週末容易客滿。"},
   "宮地嶽神社":{detail:[["營業時間","約 9:00–19:00（各資料略有差異）"],["費用","境內免費"],["建議停留","60–90 分鐘"],["特色","日本最大級大注連繩、大太鼓、大鈴；「光之道」夕陽僅出現於 2 月下旬與 10 月下旬"],["注意","3 月可看寒緋櫻、吉野櫻等（約 2,000 株，依當年花況而定）"],["資料來源","整理自日本旅遊網站與官方公告（2026 年資料），價格與時間可能調整，出發前請再確認官網"]],parking:"免費停車場約 700 台；假日與櫻花季仍可能排隊。"},
+  "旦過市場":{detail:[["營業時間","約 10:00–18:00（各店不同，定休日也依店家而異）"],["特色","百年歷史的市場，被稱為「北九州的廚房」；有鮮魚、青果、熟食，以及在地傳統的「ぬか炊き」，也有名物「旦過うどん」"],["建議停留","約 50–60 分鐘"],["注意","市場通道狹窄、假日人多；店家營業時間與公休日不同，午餐想吃的店建議出發前先查"],["資料來源","整理自福岡縣觀光網站與停車資訊網站，價格與時間可能調整，出發前請再確認"]],parking:"沒有專用停車場，周邊都是投幣式停車場：古船場ワイドパーキング（約 29 台，60 分 100 日圓，7–19 時最大 600 日圓，步行約 3 分）；Times 小倉紺屋町第2（8 台，60 分 220 日圓，步行約 2 分）；中央第一駐車場（30 分 100 日圓，步行約 4 分）。"},
   "小倉城":{detail:[["營業時間","天守閣約 9:00–17:00（11–3 月），入館至閉館前 30 分；小倉城庭園營業時間較長，請查官網"],["費用","天守閣一般約 350–500 日圓（來源不一）；與小倉城庭園共通券約 560 日圓"],["建議停留","60–90 分鐘"],["資料來源","整理自日本旅遊網站與官方公告（2026 年資料），價格與時間可能調整，出發前請再確認官網"]],parking:"無專用大型停車場。勝山公園地下駐車場約 500 台（30 分 150 日圓，白天最大約 1,000 日圓）；勝山公園有料駐車場（松本清張記念館旁，約 25 台，首 1 小時 200 日圓，之後每 20 分 100 日圓）。"},
   "白野江植物公園":{detail:[["營業時間","約 9:00–17:00（依季節與活動可能調整）"],["費用","待確認"],["特色","北九州市營花卉公園，有櫻花、牡丹、繡球等"],["注意","3 月下旬為賞櫻期，花況每年不同"],["資料來源","整理自日本旅遊網站與官方公告（2026 年資料），價格與時間可能調整，出發前請再確認官網"]],parking:"園內有停車場（資料未載明費用與台數，請確認）。"},
   "莊八幡神社":{detail:[["營業時間","境內自由"],["注意","同名神社可能不只一處，請確認 GO 導航的位置"],["資料來源","網路上找不到可靠資料，請自行補充"]]},
@@ -1161,6 +1172,30 @@ const DAY_0318 = (startDrive) => ({
   ]
 });
 
+/* ===== 3/17 兩家共同行程（劉家、潘家共用；只有「從各自飯店出發／晚餐後回飯店」的車程不同，由參數帶入） =====
+   時間為推估：9:00 出發 → 9:45 宮地嶽 → 11:50 旦過市場午餐 → 12:50 小倉城 → 14:30 庄八幡 → 16:20 Full Full → 17:05 晚餐
+   備案景點（backup）不在主路線內，顯示在當天行程最下方的「備案景點」框；要正式加入時，把它搬進 stops 即可 */
+const DAY_0317 = (startDrive, endDrive) => ({
+  date:"2027-03-17",wd:"三",title:"北九州一日遊",
+  startTime:"09:00",startDrive:startDrive,startNote:"9:00 退房出發",
+  notes:[
+    "The Full Full Hakata 明太子法國麵包要預約，預約時間請對齊 16:20 前後。",
+    "全天推估時間：09:00 出發 → 09:45〜10:45 宮地嶽神社 → 11:50〜12:45 旦過市場午餐 → 12:50〜13:50 小倉城 → 14:30〜15:00 庄八幡神社 → 16:20〜16:50 Full Full → 17:05〜18:35 晚餐。各段車程為推估值，出發前請用 Google Maps 再核對（庄八幡神社同名神社不只一處，請先確認導航位置）。",
+    "白野江植物公園改為備案：早開河津櫻 3 月中可能已凋零，當天看花況再決定。若要加入，建議排在小倉城之後、庄八幡神社之前，全天約多 80 分鐘，晚餐約晚到 18:25。"
+  ],
+  stops:[
+    {name:"宮地嶽神社",type:"main",time:"09:45",duration:"60分鐘",drive:"約65分鐘",nav:"宮地嶽神社",ll:[33.7994,130.4817]},
+    {name:"旦過市場",tag:"午餐",time:"11:50",duration:"55分鐘",drive:"約5分鐘",note:"北九州的廚房，先在市場裡吃午餐（店家待補）；市場沒有專用停車場，請停周邊投幣式停車場後步行；通道狹窄人多，帶幼兒請牽好",nav:"旦過市場"},
+    {name:"小倉城",type:"main",time:"12:50",duration:"60分鐘",drive:"約40分鐘",note:"午餐後參觀；旦過市場走到小倉城約 10–15 分鐘，帶長輩與幼兒可開車移到勝山公園停車場",nav:"小倉城",ll:[33.8847,130.8737]},
+    {name:"莊八幡神社",type:"flex",time:"14:30",duration:"30分鐘",drive:"約80分鐘",nav:"庄八幡神社 福岡県"},
+    {name:"The Full Full Hakata 明太子法國麵包",tag:"美食",time:"16:20",duration:"30分鐘",drive:"約15分鐘",note:"要預約",nav:"THE FULL FULL HAKATA 博多"},
+    {name:"炭火燒肉 AGITO HIRAO",tag:"晚餐",time:"17:05",duration:"90分鐘",drive:endDrive,note:"回飯店福岡吃飯",nav:"AGITO 平尾 炭火焼肉"}
+  ],
+  backup:[
+    {name:"白野江植物公園",duration:"60分鐘",note:"備案：早開河津櫻 3 月中可能已凋零，視花況決定是否前往；位於小倉城東側，約 30 分鐘車程",nav:"白野江植物公園",ll:[33.9136,131.0094]}
+  ]
+});
+
 const FAMILY_DATA = {
 
 /* ============================== 劉家 ============================== */
@@ -1194,14 +1229,7 @@ liu:{
     {name:"南藏院",type:"flex",duration:"50分鐘",drive:"約30分鐘",nav:"南蔵院 篠栗",ll:[33.6268,130.5405]},
     {name:"福岡市區會合晚餐",tag:"餐廳",duration:"90分鐘",drive:"約15分鐘",note:"傍晚會合吃飯：屋台／一蘭總本店／Taketora 博多一口餃／居酒屋",nav:false,walks:WALKS_0316}
   ]},
-  {date:"2027-03-17",wd:"三",title:"北九州一日遊",hotel:"vessel 貝塚",startDrive:"約40分鐘",notes:["The Full Full Hakata 明太子法國麵包要預約。"], stops:[
-    {name:"宮地嶽神社",type:"main",duration:"60分鐘",drive:"約65分鐘",nav:"宮地嶽神社",ll:[33.7994,130.4817]},
-    {name:"小倉城",type:"main",duration:"90分鐘",drive:"約30分鐘",nav:"小倉城",ll:[33.8847,130.8737]},
-    {name:"白野江植物公園",type:"flex",duration:"60分鐘",drive:"約30分鐘",nav:"白野江植物公園",ll:[33.9136,131.0094]},
-    {name:"莊八幡神社",type:"flex",duration:"30分鐘",drive:"約80分鐘",nav:"庄八幡神社 福岡県"},
-    {name:"The Full Full Hakata 明太子法國麵包",tag:"美食",duration:"30分鐘",drive:"約15分鐘",note:"要預約",nav:"THE FULL FULL HAKATA 博多"},
-    {name:"炭火燒肉 AGITO HIRAO",tag:"晚餐",duration:"90分鐘",drive:"約25分鐘",note:"回飯店福岡吃飯",nav:"AGITO 平尾 炭火焼肉"}
-  ]},
+  {...DAY_0317("約40分鐘","約25分鐘"),hotel:"vessel 貝塚"},
   DAY_0318("約35分鐘"),
   {date:"2027-03-19",wd:"五",title:"大分海洋宮殿・地獄巡禮",hotel:"AMANEK BEPPU YULA-RE Beppu Hotel",startDrive:"約20分鐘",notes:[], stops:[
     {name:"大分海洋宮殿",type:"main",duration:"180分鐘",drive:"約20分鐘",nav:"うみたまご",ll:[33.2643,131.5326]},
@@ -1229,14 +1257,7 @@ pan:{
     {name:"Cross Life 博多天神",tag:"住宿",duration:"30分鐘",drive:"步行約5分鐘",note:"Check in",nav:"Cross Life 博多天神"},
     {name:"飯店附近晚餐",tag:"餐廳",duration:"90分鐘",note:"屋台／一蘭總本店／Taketora 博多一口餃／居酒屋",nav:false,walks:WALKS_0316}
   ]},
-  {date:"2027-03-17",wd:"三",title:"北九州一日遊",hotel:"Cross Life 博多天神",startDrive:"約45分鐘",notes:["The Full Full Hakata 明太子法國麵包要預約。"], stops:[
-    {name:"宮地嶽神社",type:"main",duration:"60分鐘",drive:"約65分鐘",nav:"宮地嶽神社",ll:[33.7994,130.4817]},
-    {name:"小倉城",type:"main",duration:"90分鐘",drive:"約30分鐘",nav:"小倉城",ll:[33.8847,130.8737]},
-    {name:"白野江植物公園",type:"flex",duration:"60分鐘",drive:"約30分鐘",nav:"白野江植物公園",ll:[33.9136,131.0094]},
-    {name:"莊八幡神社",type:"flex",duration:"30分鐘",drive:"約80分鐘",nav:"庄八幡神社 福岡県"},
-    {name:"The Full Full Hakata 明太子法國麵包",tag:"美食",duration:"30分鐘",drive:"約15分鐘",note:"要預約",nav:"THE FULL FULL HAKATA 博多"},
-    {name:"炭火燒肉 AGITO HIRAO",tag:"晚餐",duration:"90分鐘",drive:"約15分鐘",note:"回飯店福岡吃飯",nav:"AGITO 平尾 炭火焼肉"}
-  ]},
+  {...DAY_0317("約45分鐘","約15分鐘"),hotel:"Cross Life 博多天神"},
   DAY_0318("約30分鐘"),
   {date:"2027-03-19",wd:"五",title:"大分海洋宮殿・地獄巡禮",hotel:"AMANEK BEPPU YULA-RE Beppu Hotel",startDrive:"約20分鐘",notes:[], stops:[
     {name:"大分海洋宮殿",type:"main",duration:"180分鐘",drive:"約20分鐘",nav:"うみたまご",ll:[33.2643,131.5326]},
@@ -1290,6 +1311,16 @@ function prep(){
       if(prev && prev.hotel) list.unshift({name:prev.hotel,tag:'出發',time:d.startTime||'',note:d.startNote||'退房出發',nav:false,drive:d.startDrive});
       if(d.hotel && d.hotelStop!==false) list.push({name:d.hotel,tag:'住宿',note:'入住',nav:(HOTELS[d.hotel]&&HOTELS[d.hotel].nav)||(/待補/.test(d.hotel)?false:d.hotel)});
       d.all=list;
+      (d.backup||[]).forEach(b=>{
+        b.backup=true; b.type='flex'; b.key=d.date+'|備案|'+b.name;
+        const si=SPOT_INFO[b.name]; if(si){ if(!b.detail&&si.detail) b.detail=si.detail; if(!b.parking&&si.parking) b.parking=si.parking; }
+        const pn=PARK_NAV[b.name];
+        if(pn&&b.park===undefined&&b.nav!==false){
+          const po=pn[2]||{};
+          b.park={q:pn[0],label:pn[1],alts:po.alts||[]};
+          if(po.self&&!b.alt) b.alt={label:'改導航至景點本身',q:b.nav||b.name};
+        }
+      });
       list.forEach(s=>{
         const n=(seen[s.name]=(seen[s.name]||0)+1);
         s.key=d.date+'|'+s.name+(n>1?'#'+n:'');
@@ -1439,6 +1470,29 @@ function renderDay(){
     const g=q('guide'); if(g) g.onclick=()=>{const o=!openGuides.has(s.key);o?openGuides.add(s.key):openGuides.delete(s.key);g.classList.toggle('open',o);g.closest('.guide').classList.toggle('open',o);g.setAttribute('aria-expanded',o);const gh=g.querySelector('.gh');if(gh)gh.textContent=o?'收合':'展開'};
   });
 
+  const bk=d.backup||[], bs=$('backupSec');
+  bs.hidden=!bk.length;
+  $('backupBox').innerHTML=bk.map(b=>{
+    const hasDetail=b.detail&&b.detail.length, op=openGuides.has(b.key);
+    return `<div class="backup-card" data-key="${esc(b.key)}">
+      <div class="tagrow"><span class="pill flex">備案</span>${b.duration?`<span class="tag">停留 ${esc(plain(b.duration))}</span>`:''}</div>
+      <div class="name">${esc(plain(b.name))}</div>
+      ${b.note?`<div class="note">${esc(plain(b.note))}</div>`:''}
+      ${b.park?`<div class="parkline"><b>P</b><span>GO 導航至：${esc(b.park.label)}</span></div>${(b.park.alts||[]).map((a,i)=>`<div><button type="button" class="altgo" data-act="parkalt" data-i="${i}">備案停車場：${esc(a[0])}${ic('go')}</button></div>`).join('')}`:''}
+      ${b.alt&&b.alt.q?`<div><button type="button" class="altgo" data-act="alt">${esc(b.alt.label||'導航至備案')}${ic('go')}</button></div>`:''}
+      ${hasDetail?`<div class="guide${op?' open':''}"><div class="guide-sheet"><button type="button" class="guidebtn${op?' open':''}" data-act="guide" aria-expanded="${op}"><span class="gl">景點資訊</span><span class="gh">${op?'收合':'展開'}</span><span class="gp" aria-hidden="true"></span></button><div class="guide-body"><div class="guide-in"><div class="guide-card">${b.detail.map(r=>`<div class="row"><b>${esc(r[0])}</b>${linkify(r[1])}</div>`).join('')}</div></div></div></div></div>`:''}
+      <div class="card-bottom">${navQuery(b)?`<div class="go" data-act="nav" role="button" tabindex="0" title="Google Maps 導航">GO${ic('go')}</div>`:''}</div>
+    </div>`;
+  }).join('');
+  $('backupBox').querySelectorAll('.backup-card').forEach(el=>{
+    const b=bk.find(x=>x.key===el.dataset.key);
+    const q=a=>el.querySelector(`[data-act="${a}"]`);
+    if(q('nav')) q('nav').onclick=()=>goNav(b);
+    if(q('alt')) q('alt').onclick=()=>openMapsUrl(mapsUrl(b.alt.q));
+    el.querySelectorAll('[data-act="parkalt"]').forEach(x=>x.onclick=()=>openMapsUrl(mapsUrl(b.park.alts[+x.dataset.i][1])));
+    const g=q('guide'); if(g) g.onclick=()=>{const o=!openGuides.has(b.key);o?openGuides.add(b.key):openGuides.delete(b.key);g.classList.toggle('open',o);g.closest('.guide').classList.toggle('open',o);g.setAttribute('aria-expanded',o);const gh=g.querySelector('.gh');if(gh)gh.textContent=o?'收合':'展開'};
+  });
+
   const ns=$('notesSec');
   ns.hidden=!(d.notes&&d.notes.length);
   $('dayNotes').innerHTML=d.notes&&d.notes.length?`<div class="daynotes"><ul>${d.notes.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`:'';
@@ -1555,8 +1609,8 @@ function copyText(t,btn){
 }
 function showInfo(){
   const secs=days().map((d,i)=>{
-    const rows=d.all.filter(s=>s.detail&&s.detail.length);
-    return rows.length?`<div class="attraction-section"><div class="attraction-day pk-day"><span class="pk-n">Day ${i+1}</span><span class="pk-date">${fmtDate(d.date).replace('.','/')}（${esc(d.wd)}）</span><span class="pk-ttl">${esc(d.title)}</span></div>${rows.map(s=>`<div class="attraction-item"><div class="attraction-name">${esc(plain(s.name))}</div><div class="attraction-details">${s.detail.map(r=>`<div><span class="k">${esc(r[0])}</span>${linkify(r[1])}</div>`).join('')}</div></div>`).join('')}</div>`:'';
+    const rows=d.all.concat(d.backup||[]).filter(s=>s.detail&&s.detail.length);
+    return rows.length?`<div class="attraction-section"><div class="attraction-day pk-day"><span class="pk-n">Day ${i+1}</span><span class="pk-date">${fmtDate(d.date).replace('.','/')}（${esc(d.wd)}）</span><span class="pk-ttl">${esc(d.title)}</span></div>${rows.map(s=>`<div class="attraction-item"><div class="attraction-name">${esc(plain(s.name))}${s.backup?'（備案）':''}</div><div class="attraction-details">${s.detail.map(r=>`<div><span class="k">${esc(r[0])}</span>${linkify(r[1])}</div>`).join('')}</div></div>`).join('')}</div>`:'';
   }).join('');
   document.getElementById('infoBody').innerHTML=overviewHtml()+'<div class="note-block" style="margin-top:0;margin-bottom:22px">以下為網路整理的初稿（2026 年資料），價格與時間每年可能調整。<br>2026/7/28 熊本地震後，部分道路與景點可能仍有管制或調整營業，出發前請再查官方公告。</div>'+(secs||'<div class="empty">還沒有景點營業資訊。把景點的 detail 欄位填好，就會自動出現在這裡（也會出現在行程卡片的「景點資訊」）。</div>');
   const oc=document.getElementById('ovCopy'); if(oc) oc.onclick=()=>copyText(overviewText(),oc);
@@ -1564,8 +1618,8 @@ function showInfo(){
 }
 function showParking(){
   const secs=days().map((d,i)=>{
-    const rows=d.all.filter(s=>s.parking);
-    return rows.length?`<div class="attraction-section"><div class="attraction-day pk-day"><span class="pk-n">Day ${i+1}</span><span class="pk-date">${fmtDate(d.date).replace('.','/')}（${esc(d.wd)}）</span><span class="pk-ttl">${esc(d.title)}</span></div>${rows.map(s=>`<div class="parking-section"><div class="parking-title">${esc(plain(s.name))}</div><div class="parking-item">${linkify(s.parking)}</div></div>`).join('')}</div>`:'';
+    const rows=d.all.concat(d.backup||[]).filter(s=>s.parking);
+    return rows.length?`<div class="attraction-section"><div class="attraction-day pk-day"><span class="pk-n">Day ${i+1}</span><span class="pk-date">${fmtDate(d.date).replace('.','/')}（${esc(d.wd)}）</span><span class="pk-ttl">${esc(d.title)}</span></div>${rows.map(s=>`<div class="parking-section"><div class="parking-title">${esc(plain(s.name))}${s.backup?'（備案）':''}</div><div class="parking-item">${linkify(s.parking)}</div></div>`).join('')}</div>`:'';
   }).join('');
   document.getElementById('parkingBody').innerHTML=`<div class="note-block" style="margin-top:0;margin-bottom:28px"><span class="tip-title">停車小提醒</span>— 週末與連假停車位容易滿，建議提早出發<br>— 部分景點可用「ParkingOne」等 App 預約停車位<br>— 走高速公路建議租車時加辦 ETC 卡<br>— 以下停車資料為網路整理（2026 年），GO 導航到景點本身，停車場以現場標示為準；熊本地震後部分道路與設施可能管制，出發前請查最新公告</div>`+(secs||'<div class="empty">各景點的停車資訊還沒填。把景點的 parking 欄位填好，就會自動出現在這裡。</div>');
   openModal('parkingModal');
