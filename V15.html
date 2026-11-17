@@ -908,7 +908,7 @@ details.ov-wrap:not([open]) .ov-small-close{display:none}
   <div class="confirm-actions"><button type="button" class="confirm-cancel" id="resetCancel">取消</button><button type="button" class="confirm-ok" id="resetOk">確定</button></div>
 </div></div>
 <div id="flightModal" class="modal-bg"><div class="modal"><button class="modal-close" data-close type="button" aria-label="關閉"><svg class="i" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></button><h2>航班資訊</h2><div class="fambadge" data-fambadge></div><div id="flightBody"></div></div></div>
-<div id="infoModal" class="modal-bg"><div class="modal"><button class="modal-close" data-close type="button" aria-label="關閉"><svg class="i" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></button><h2>景點營業資訊</h2><div class="fambadge" data-fambadge></div><div id="infoBody"></div></div></div>
+<div id="infoModal" class="modal-bg"><div class="modal"><button class="modal-close" data-close type="button" aria-label="關閉"><svg class="i" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></button><h2>景點資訊詳覽</h2><div class="fambadge" data-fambadge></div><div id="infoBody"></div></div></div>
 <div id="parkingModal" class="modal-bg"><div class="modal"><button class="modal-close" data-close type="button" aria-label="關閉"><svg class="i" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></button><h2>停車資訊詳覽</h2><div class="fambadge" data-fambadge></div><div id="parkingBody"></div></div></div>
 <div id="medicalModal" class="modal-bg"><div class="modal"><button class="modal-close" data-close type="button" aria-label="關閉"><svg class="i" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></button><h2>醫療應急資訊</h2><div class="fambadge" data-fambadge></div><div id="medicalBody"></div></div></div>
 <div id="packModal" class="modal-bg"><div class="modal"><button class="modal-close" data-close type="button" aria-label="關閉"><svg class="i" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></button><h2>行李清單</h2><div class="fambadge" data-fambadge></div><div class="pack-sum" id="packSum"></div>
@@ -1498,7 +1498,7 @@ function overviewHtml(){
     const chips=dayOverviewItems(d).map(o=>`<span class="ov-chip${o.flex?' flex':''}${o.hotel?' hotel':''}">${esc(o.label)}${o.flex?'<small>彈性</small>':''}</span>`).join('<span class="ov-sep">－</span>');
     return `<div class="ov-day"><div class="ov-date"><span class="dn">DAY ${i+1}</span><span class="dd">${esc(fmtDate(d.date).replace('.','/'))}</span><span class="dw">（${esc(d.wd)}）</span></div><div class="ov-route">${chips}</div></div>`;
   }).join('');
-  return `<details class="ov-wrap"><summary><div class="ov-ttl"><b>每日行程概覽</b><small><span class="ov-small-open">點一下展開　共 ${days().length} 天</span><span class="ov-small-close">點一下收合</span></small></div><svg class="ov-chev" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></summary><div class="ov-body"><div class="ov-tools"><button type="button" class="ov-copy" id="ovCopy">複製文字</button></div>${rows}</div></details>`;
+  return `<details class="ov-wrap"><summary><div class="ov-ttl"><b>每日行程概覽</b><small><span class="ov-small-open">點我看全部　共 ${days().length} 天</span><span class="ov-small-close">點一下收合</span></small></div><svg class="ov-chev" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></summary><div class="ov-body"><div class="ov-tools"><button type="button" class="ov-copy" id="ovCopy">複製文字</button></div>${rows}</div></details>`;
 }
 function copyText(t,btn){
   const done=()=>{const o=btn.textContent;btn.textContent='已複製';setTimeout(()=>btn.textContent=o,1400)};
