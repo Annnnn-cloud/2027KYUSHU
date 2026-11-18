@@ -906,6 +906,10 @@ details.ov-wrap:not([open]) .ov-small-close{display:none}
 .ov+.ov{padding-left:14px}
 .ov .v{font-size:24px;margin-top:5px}
 .ov .s{font-size:11px;margin-top:2px}
+
+/* 當日路線地圖：飯店圓點（不標號碼） */
+.map-hotel-marker{width:18px;height:18px;border-radius:50%;background:#F5F1EA;border:4px solid #55433F;box-sizing:border-box;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.maplegend .n.hotel{background:#F5F1EA;border:4px solid #55433F;box-sizing:border-box;color:transparent}
 </style>
 </head>
 <body>
@@ -1093,11 +1097,11 @@ const FAMILIES = {
 
 const HOTELS = {
   // 目前只有名稱；地址、電話、入住退房時間請之後補上（留空會顯示「待補充」）
-  'vessel 貝塚':{short:'vessel貝塚',address:'',phone:'',checkin:'',checkout:'',nav:'vessel 貝塚 福岡'},
-  'AMANEK BEPPU YULA-RE Beppu Hotel':{short:'AMANEK別府',address:'',phone:'',checkin:'',checkout:'',nav:'AMANEK BEPPU YULA-RE Beppu Hotel'},
-  'KOKO HOTEL Premier Kumamoto':{short:'KOKO HOTEL熊本',address:'',phone:'',checkin:'',checkout:'',nav:'KOKO HOTEL Premier Kumamoto'},
-  'Cross Life 博多天神':{short:'CrossLife天神',address:'',phone:'',checkin:'',checkout:'',nav:'Cross Life 博多天神'},
-  'demachi4-60':{short:'demachi4-60',address:'〒860-0074 熊本，出町4-60',phone:'+819090716309',checkin:'2027 年 3 月 13 日（六）15:00～18:00',checkout:'2027 年 3 月 14 日（日）06:00～10:00',nav:'〒860-0074 熊本県熊本市出町4-60'}
+  'vessel 貝塚':{short:'vessel貝塚',address:'',phone:'',checkin:'',checkout:'',nav:'vessel 貝塚 福岡',ll:[33.635323,130.423386]},
+  'AMANEK BEPPU YULA-RE Beppu Hotel':{short:'AMANEK別府',address:'',phone:'',checkin:'',checkout:'',nav:'AMANEK BEPPU YULA-RE Beppu Hotel',ll:[33.280312,131.502627]},
+  'KOKO HOTEL Premier Kumamoto':{short:'KOKO HOTEL熊本',address:'',phone:'',checkin:'',checkout:'',nav:'KOKO HOTEL Premier Kumamoto',ll:[32.8,130.7036]},
+  'Cross Life 博多天神':{short:'CrossLife天神',address:'',phone:'',checkin:'',checkout:'',nav:'Cross Life 博多天神',ll:[33.58771,130.406658]},
+  'demachi4-60':{short:'demachi4-60',address:'〒860-0074 熊本，出町4-60',phone:'+819090716309',checkin:'2027 年 3 月 13 日（六）15:00～18:00',checkout:'2027 年 3 月 14 日（日）06:00～10:00',nav:'〒860-0074 熊本県熊本市出町4-60',ll:[32.822518,130.706627],llApprox:true}
 };
 
 // 景點縮圖：'景點名稱':'圖片網址'。名稱要與行程卡片上的名稱完全一致。
@@ -1198,13 +1202,13 @@ const DAY_0320 = () => ({
     "回程在國道218號的 Cipollino 休息：天岩戶約1.5小時車程，之後到熊本市區約55分鐘；營業約到 18:00、賣完會提早關，店家休息日依來源不同（週一或週二），3/20 為週六，出發前建議先確認營業。"
   ],
   stops:[
-    {name:"扇森稲荷神社",type:"flex",time:"07:10",duration:"30分鐘",drive:"約1小時15分鐘",note:"長途路上的停靠點（大分縣竹田市，國道57號旁）：朱紅鳥居連著長石階，順便休息、上廁所",nav:"扇森稲荷神社 竹田市"},
+    {name:"扇森稲荷神社",type:"flex",time:"07:10",duration:"30分鐘",drive:"約1小時15分鐘",note:"長途路上的停靠點（大分縣竹田市，國道57號旁）：朱紅鳥居連著長石階，順便休息、上廁所",nav:"扇森稲荷神社 竹田市",ll:[32.956778, 131.370361]},
     {name:"買小火車車票",type:"flex",time:"08:55",duration:"15分鐘",drive:"約5分鐘",note:"9:00 前到站購票（假日人多）；票選 13:00 前後的場次，剛好接在划船＋午餐之後",nav:"高千穂あまてらす鉄道 高千穂駅",ll:[32.7088,131.3003]},
     {name:"高千穗划船",type:"main",time:"09:15",duration:"135分鐘（含 10:30 划船）",drive:"約5分鐘",note:"假日停車位少，9:15 前進場停車；先逛散步道，10:30 登船（約30分鐘），上岸後走回停車場約 10 分鐘",nav:"高千穂峡 貸しボート",ll:[32.704,131.304]},
     {name:"高千穗午餐",tag:"午餐",time:"11:40",duration:"60分鐘",drive:"約5分鐘",note:"高千穗市區用餐（餐廳待補）；假日午餐時段會排隊，盡量 11:40 前入座",nav:false},
     {name:"高千穗小火車",type:"flex",time:"12:50",duration:"60分鐘",drive:"約15分鐘",note:"提早 10 分鐘到站，搭 13:00 前後場次（乘車約30分鐘）",nav:"高千穂あまてらす鉄道 高千穂駅",ll:[32.7088,131.3003]},
     {name:"天岩戶神社",type:"main",time:"14:05",duration:"75分鐘",drive:"約1小時30分鐘",nav:"天岩戸神社 西本宮",ll:[32.7378,131.3562]},
-    {name:"Cipollino チポリーノ",type:"flex",time:"16:50",duration:"40分鐘",drive:"約55分鐘",note:"國道218號沿線，公路休息・買麵包或吃披薩（營業約到 18:00，賣完會提早關）",nav:"Bread&Cake Cipollino 熊本県上益城郡山都町入佐81-1"},
+    {name:"Cipollino チポリーノ",type:"flex",time:"16:50",duration:"40分鐘",drive:"約55分鐘",note:"國道218號沿線，公路休息・買麵包或吃披薩（營業約到 18:00，賣完會提早關）",nav:"Bread&Cake Cipollino 熊本県上益城郡山都町入佐81-1",ll:[32.689233, 130.996527]},
     {name:"熊本市區還車",tag:"租車",time:"18:25",duration:"30分鐘",drive:"約10分鐘",nav:false,note:"還車地點待補；請先確認租車店還車截止時間"},
     {name:"回熊本飯店吃飯",tag:"餐廳",time:"19:05",duration:"90分鐘",drive:"約5分鐘",nav:false}
   ]
@@ -1247,11 +1251,11 @@ const DAY_0317 = (startDrive, endDrive) => ({
   ],
   stops:[
     {name:"宮地嶽神社",type:"main",time:"09:45",duration:"60分鐘",drive:"約65分鐘",nav:"宮地嶽神社",ll:[33.7994,130.4817]},
-    {name:"旦過市場",tag:"午餐",time:"11:50",duration:"55分鐘",drive:"約5分鐘",note:"北九州的廚房（暫定）市場裡吃午餐（店家待補）；市場沒有專用停車場，請停周邊投幣式停車場後步行",nav:"旦過市場"},
+    {name:"旦過市場",tag:"午餐",time:"11:50",duration:"55分鐘",drive:"約5分鐘",note:"北九州的廚房（暫定）市場裡吃午餐（店家待補）；市場沒有專用停車場，請停周邊投幣式停車場後步行",nav:"旦過市場",ll:[33.881944, 130.879167]},
     {name:"小倉城",type:"main",time:"12:50",duration:"60分鐘",drive:"約40分鐘",note:"融合歷史與現代感，被譽為全日本最有趣的城堡。",nav:"小倉城",ll:[33.8847,130.8737]},
-    {name:"莊八幡神社",type:"flex",time:"14:30",duration:"30分鐘",drive:"約80分鐘",nav:"庄八幡神社 福岡県"},
-    {name:"The Full Full Hakata 明太子法國麵包",tag:"美食",time:"16:20",duration:"30分鐘",drive:"約15分鐘",note:"要預約",nav:"THE FULL FULL HAKATA 博多"},
-    {name:"炭火燒肉 AGITO HIRAO",tag:"晚餐",time:"17:05",duration:"90分鐘",drive:endDrive,note:"回飯店福岡吃飯",nav:"AGITO 平尾 炭火焼肉"}
+    {name:"莊八幡神社",type:"flex",time:"14:30",duration:"30分鐘",drive:"約80分鐘",nav:"庄八幡神社 福岡県",ll:[33.81115, 130.931841]},
+    {name:"The Full Full Hakata 明太子法國麵包",tag:"美食",time:"16:20",duration:"30分鐘",drive:"約15分鐘",note:"要預約",nav:"THE FULL FULL HAKATA 博多",ll:[33.58992, 130.412578]},
+    {name:"炭火燒肉 AGITO HIRAO",tag:"晚餐",time:"17:05",duration:"90分鐘",drive:endDrive,note:"回飯店福岡吃飯",nav:"AGITO 平尾 炭火焼肉",ll:[33.573266, 130.404422]}
   ],
   backup:[
     {name:"白野江植物公園",duration:"60分鐘",note:"備案：早開河津櫻 3 月中可能已凋零，視花況決定是否前往；位於小倉城東側，約 30 分鐘車程",nav:"白野江植物公園",ll:[33.9136,131.0094]}
@@ -1276,22 +1280,22 @@ liu:{
     ], stops:[
     {name:"熊本機場",tag:"班機",nocheck:true,time:"10:35",duration:"70分鐘",drive:"約20分鐘",note:"10:35 抵達熊本機場；入境、領行李，午餐可在機場內先吃，11:45 前離開",nav:false,ll:[32.8373,130.8551]},
     {name:"取車",tag:"租車",time:"12:05",duration:"30分鐘",drive:"約65分鐘",note:"預估 12:05 租車（取車地點待補）",nav:false},
-    {name:"上色見熊野座神社",type:"main",time:"13:40",duration:"60分鐘",drive:"約40分鐘",note:"動漫電影「螢火之森」與「夏目友人帳」的靈感取景地點",nav:"上色見熊野座神社"},
+    {name:"上色見熊野座神社",type:"main",time:"13:40",duration:"60分鐘",drive:"約40分鐘",note:"動漫電影「螢火之森」與「夏目友人帳」的靈感取景地點",nav:"上色見熊野座神社",ll:[32.8545, 131.158667]},
     {name:"草千里之濱",type:"flex",time:"15:20",duration:"45分鐘",drive:"約75分鐘",note:"每年2月下旬至3月上旬，當地會進行「野燒」活動維護草原生態，有機會看見整片草原冒新芽的特殊景觀。",nav:"草千里ヶ浜",ll:[32.8833,131.0833]}
   ]},
   {date:"2027-03-14",wd:"日",title:"熊本採草莓．天草住一晚",hotel:"天草市（飯店待補）",startDrive:"約40分鐘",notes:[], stops:[
-    {name:"Jirobei's Farm",type:"main",time:"10:00",duration:"60分鐘",drive:"約55分鐘",note:"採草莓吃到飽，有八種品種！建議官網先預約",nav:"Jirobei's Farm"},
-    {name:"海中水族館 Sea Donut",type:"main",time:"12:00",duration:"120分鐘",drive:"約5分鐘",nav:"海中水族館シードーナツ",detail:[["地址","熊本県上天草市松島町合津6225-7"],["電話","0969-56-2570"],["營業時間","冬季（至 3/19）9:00–17:00（最終入場 16:00）；3/20 起夏季 9:00–18:00（最終入場 17:00）"],["費用","請以官網為準：https://amakusapearl.com/sea/"],["資料來源","整理自第三方網站，出發前請再確認官網"]]},
-    {name:"L'isola Terrace 天草",tag:"午餐",duration:"40分鐘",drive:"約60分鐘",note:"午餐可在商場吃~有賣有名的海鹽麵包",nav:"リゾラテラス天草"},
-    {name:"倉岳神社",type:"main",duration:"40分鐘",drive:"約40分鐘",nav:"倉岳神社 天草"}
+    {name:"Jirobei's Farm",type:"main",time:"10:00",duration:"60分鐘",drive:"約55分鐘",note:"採草莓吃到飽，有八種品種！建議官網先預約",nav:"Jirobei's Farm",ll:[32.703175, 130.638459]},
+    {name:"海中水族館 Sea Donut",type:"main",time:"12:00",duration:"120分鐘",drive:"約5分鐘",nav:"海中水族館シードーナツ",detail:[["地址","熊本県上天草市松島町合津6225-7"],["電話","0969-56-2570"],["營業時間","冬季（至 3/19）9:00–17:00（最終入場 16:00）；3/20 起夏季 9:00–18:00（最終入場 17:00）"],["費用","請以官網為準：https://amakusapearl.com/sea/"],["資料來源","整理自第三方網站，出發前請再確認官網"]],ll:[32.529833, 130.428361]},
+    {name:"L'isola Terrace 天草",tag:"午餐",duration:"40分鐘",drive:"約60分鐘",note:"午餐可在商場吃~有賣有名的海鹽麵包",nav:"リゾラテラス天草",ll:[32.527785, 130.426335]},
+    {name:"倉岳神社",type:"main",duration:"40分鐘",drive:"約40分鐘",nav:"倉岳神社 天草",ll:[32.427711, 130.327267]}
   ]},
   {date:"2027-03-15",wd:"一",title:"天草海豚・熊本城",hotel:"熊本市區（飯店待補）",startDrive:"約40分鐘",notes:[], stops:[
-    {name:"天草海豚",type:"main",time:"10:00",duration:"90分鐘",drive:"約100分鐘",note:"10:00 場次（集合地點與預約資訊待補）",nav:"天草 イルカウォッチング"},
-    {name:"粟嶋神社",type:"flex",duration:"30分鐘",drive:"約30分鐘",nav:"粟嶋神社 熊本県"},
+    {name:"天草海豚",type:"main",time:"10:00",duration:"90分鐘",drive:"約100分鐘",note:"10:00 場次（集合地點與預約資訊待補）",nav:"天草 イルカウォッチング",ll:[32.54558, 130.13053]},
+    {name:"粟嶋神社",type:"flex",duration:"30分鐘",drive:"約30分鐘",nav:"粟嶋神社 熊本県",ll:[32.699694, 130.633667]},
     {name:"熊本城",type:"main",duration:"120分鐘",drive:"約15分鐘",nav:"熊本城",ll:[32.8062,130.7058]}
   ]},
   {date:"2027-03-16",wd:"二",title:"久留米・福岡會合",hotel:"vessel 貝塚",startDrive:"約70分鐘",notes:["傍晚在福岡市區會合吃飯。福岡可選擇很多：屋台／一蘭總本店／Taketora 博多一口餃／居酒屋"], stops:[
-    {name:"スカイパーク久留米こども遊園地",type:"main",duration:"120分鐘",drive:"約15分鐘",nav:"スカイパーク久留米こども遊園地"},
+    {name:"スカイパーク久留米こども遊園地",type:"main",duration:"120分鐘",drive:"約15分鐘",nav:"スカイパーク久留米こども遊園地",ll:[33.31944, 130.528194]},
     {name:"久留米宮ノ陣町の桜並木",type:"flex",duration:"30分鐘",drive:"約25分鐘",nav:"宮ノ陣町 桜並木 久留米"},
     {name:"久留米高良大社",type:"flex",duration:"60分鐘",drive:"約55分鐘",nav:"高良大社",ll:[33.314,130.54]},
     {name:"南藏院",type:"flex",duration:"50分鐘",drive:"約30分鐘",nav:"南蔵院 篠栗",ll:[33.6268,130.5405]},
@@ -1301,7 +1305,7 @@ liu:{
   DAY_0318("約35分鐘"),
   {date:"2027-03-19",wd:"五",title:"大分海洋宮殿・地獄巡禮",hotel:"AMANEK BEPPU YULA-RE Beppu Hotel",startDrive:"約20分鐘",notes:[], stops:[
     {name:"大分海洋宮殿",type:"main",duration:"180分鐘",drive:"約20分鐘",nav:"うみたまご",ll:[33.2643,131.5326]},
-    {name:"貴船城",type:"flex",duration:"40分鐘",drive:"約35分鐘",nav:"貴船城 大分"},
+    {name:"貴船城",type:"flex",duration:"40分鐘",drive:"約35分鐘",nav:"貴船城 大分",ll:[33.3197, 131.4828]},
     {name:"血池地獄・龍卷地獄",type:"flex",duration:"75分鐘",drive:"約20分鐘",nav:"血の池地獄",ll:[33.3157,131.4731]},
     {name:"回別府吃晚餐",tag:"餐廳",duration:"90分鐘",drive:"約10分鐘",note:"回飯店別府吃飯",nav:false}
   ]},
@@ -1329,7 +1333,7 @@ pan:{
   DAY_0318("約30分鐘"),
   {date:"2027-03-19",wd:"五",title:"大分海洋宮殿・地獄巡禮",hotel:"AMANEK BEPPU YULA-RE Beppu Hotel",startDrive:"約20分鐘",notes:[], stops:[
     {name:"大分海洋宮殿",type:"main",duration:"180分鐘",drive:"約20分鐘",nav:"うみたまご",ll:[33.2643,131.5326]},
-    {name:"貴船城",type:"flex",duration:"40分鐘",drive:"約35分鐘",nav:"貴船城 大分"},
+    {name:"貴船城",type:"flex",duration:"40分鐘",drive:"約35分鐘",nav:"貴船城 大分",ll:[33.3197, 131.4828]},
     {name:"血池地獄・龍卷地獄",type:"flex",duration:"75分鐘",drive:"約20分鐘",nav:"血の池地獄",ll:[33.3157,131.4731]},
     {name:"回別府吃晚餐",tag:"餐廳",duration:"90分鐘",drive:"約10分鐘",note:"回飯店別府吃飯",nav:false}
   ]},
@@ -1376,8 +1380,8 @@ function prep(){
       const list=d.stops.slice();
       const di=fd.days.indexOf(d), prev=di>0?fd.days[di-1]:null;
       // 每天的起點：前一晚住的飯店（第一天則是抵達機場），起點不需要導航
-      if(prev && prev.hotel) list.unshift({name:prev.hotel,tag:'出發',time:d.startTime||'',note:d.startNote||'退房出發',nav:false,drive:d.startDrive});
-      if(d.hotel && d.hotelStop!==false) list.push({name:d.hotel,tag:'住宿',time:d.hotelTime||'',note:d.hotelNote||'入住',nav:(HOTELS[d.hotel]&&HOTELS[d.hotel].nav)||(/待補/.test(d.hotel)?false:d.hotel)});
+      if(prev && prev.hotel) list.unshift({name:prev.hotel,tag:'出發',time:d.startTime||'',note:d.startNote||'退房出發',nav:false,drive:d.startDrive,ll:(HOTELS[prev.hotel]||{}).ll,llApprox:(HOTELS[prev.hotel]||{}).llApprox});
+      if(d.hotel && d.hotelStop!==false) list.push({name:d.hotel,tag:'住宿',time:d.hotelTime||'',note:d.hotelNote||'入住',nav:(HOTELS[d.hotel]&&HOTELS[d.hotel].nav)||(/待補/.test(d.hotel)?false:d.hotel),ll:(HOTELS[d.hotel]||{}).ll,llApprox:(HOTELS[d.hotel]||{}).llApprox});
       d.all=list;
       (d.backup||[]).forEach(b=>{
         b.backup=true; b.type='flex'; b.key=d.date+'|備案|'+b.name;
@@ -1393,6 +1397,7 @@ function prep(){
         const n=(seen[s.name]=(seen[s.name]||0)+1);
         s.key=d.date+'|'+s.name+(n>1?'#'+n:'');
         s.type=s.type||'';
+        if(!s.ll&&s.tag==='住宿'&&HOTELS[s.name]&&HOTELS[s.name].ll){s.ll=HOTELS[s.name].ll;s.llApprox=HOTELS[s.name].llApprox}
         const si=SPOT_INFO[s.name]; if(si){ if(!s.detail&&si.detail) s.detail=si.detail; if(!s.parking&&si.parking) s.parking=si.parking; }
         const pn=PARK_NAV[s.name];
         if(pn&&s.park===undefined&&s.nav!==false&&s.tag!=='出發'&&s.tag!=='住宿'){
@@ -1614,16 +1619,25 @@ function ensureMap(){
 }
 function renderMap(){
   const d=curDay(), leg=document.getElementById('mapLegend');
+  const isHotel=s=>s.tag==='出發'||s.tag==='住宿';
   const mapped=d.all.filter(s=>s.ll), missing=d.all.filter(s=>!s.ll&&s.tag!=='住宿'&&s.tag!=='出發');
-  leg.innerHTML=mapped.map((s,i)=>`<li><span class="n ${s.type}">${i+1}</span><span>${esc(plain(s.name))}</span></li>`).join('')+missing.map(s=>`<li class="miss"><span class="n">–</span><span>${esc(plain(s.name))}　<small>（未標示在地圖上）</small></span></li>`).join('');
+  let num=0; mapped.forEach(s=>{ s.mapNo=isHotel(s)?0:++num });
+  leg.innerHTML=mapped.map(s=>isHotel(s)
+    ?`<li><span class="n hotel"></span><span>${s.tag==='出發'?'出發':'住宿'}・${esc(plain(s.name))}${s.llApprox?'　<small>（約略位置）</small>':''}</span></li>`
+    :`<li><span class="n ${s.type}">${s.mapNo}</span><span>${esc(plain(s.name))}</span></li>`).join('')+missing.map(s=>`<li class="miss"><span class="n">–</span><span>${esc(plain(s.name))}　<small>（未標示在地圖上）</small></span></li>`).join('');
   if(!ensureMap()) return;
   layer.clearLayers();
   const pts=[];
-  mapped.forEach((s,i)=>{
+  mapped.forEach(s=>{
     pts.push(s.ll);
-    const cls=s.type==='main'?'m-main':s.type==='flex'?'m-flex':'m-oth';
-    const icon=L.divIcon({className:'map-num-marker '+cls,html:String(i+1),iconSize:[26,26],iconAnchor:[13,13]});
-    L.marker(s.ll,{icon}).addTo(layer).bindPopup(`<b>${i+1}. ${esc(plain(s.name))}</b>`);
+    if(isHotel(s)){
+      const icon=L.divIcon({className:'map-hotel-marker',html:'',iconSize:[18,18],iconAnchor:[9,9]});
+      L.marker(s.ll,{icon}).addTo(layer).bindPopup(`<b>${s.tag==='出發'?'出發':'住宿'}：${esc(plain(s.name))}</b>${s.llApprox?'<br><small>約略位置</small>':''}`);
+    }else{
+      const cls=s.type==='main'?'m-main':s.type==='flex'?'m-flex':'m-oth';
+      const icon=L.divIcon({className:'map-num-marker '+cls,html:String(s.mapNo),iconSize:[26,26],iconAnchor:[13,13]});
+      L.marker(s.ll,{icon}).addTo(layer).bindPopup(`<b>${s.mapNo}. ${esc(plain(s.name))}</b>`);
+    }
   });
   if(pts.length>1) L.polyline(pts,{color:'#8A6560',weight:2,opacity:.9,dashArray:'5,8'}).addTo(layer);
   lastBounds=pts.length?L.latLngBounds(pts):null;
@@ -1729,7 +1743,6 @@ function showMedical(){
     <div class="parking-item">• 繁體中文客服 <strong>09:00～22:00</strong>；深夜緊急狀況請直接叫救護車（119）</div>
     <div class="parking-item med-warn">• <strong class="med-key">訪日醫療支援方案</strong>（須「出發前」申請並付款，約 3 個工作天內寄付款連結）：1～7 天 <strong>550 日圓</strong>、8～15 天 1,100 日圓、16～30 天 1,650 日圓（${FAMILIES[fam].zh} 本行程 ${n} 天，屬 <strong>${plan}</strong>）</div>
     <div class="parking-item">• 方案內容：醫療諮詢免費、優先看診、診斷書 4,200 日圓（非方案 20,600 日圓）、免費英文診斷書與收據一份（可供理賠）；另有 2～3 人同行的團體方案</div>
-    <div class="parking-item">• 藥費另付藥局，領藥帶護照；兒童糖漿類藥品日本藥局常缺貨，建議<strong>自備孩子常備藥</strong></div>
     <div class="parking-item"><strong>官網：</strong>${A('https://oh-doctor.com/zh-tw/oh-traveler-dr-tw/')}　<span style="font-size:11.5px">費用與規則請以官網最新公告為準</span></div></div></div>
   <div class="attraction-section"><div class="attraction-day">租車應急聯絡</div><div class="parking-section"><div class="parking-item">租車公司與電話尚未提供 ${TBD}。車輛故障／無法準時還車／事故，請聯絡租車公司；<strong>發生事故請先通報警察 110</strong></div></div></div>
   <div class="note-block"><span class="tip-title">緊急就醫步驟</span>1. 撥打 119（救護車）或 110（警察），或前往附近急診<br>2. 告知位置與症狀（英文或簡單日文）<br>3. 保存診斷書與醫療收據，供保險理賠<br>4. 需要中文協助：Japan Visitor Hotline 或駐福岡辦事處<br><br><span class="tip-title">常用日文</span>• 醫院：病院（びょういん）　• 救護車：救急車（きゅうきゅうしゃ）<br>• 我需要幫助：助けてください（たすけてください）</div>`;
@@ -1774,4 +1787,3 @@ window.addEventListener('DOMContentLoaded',init);
 </script>
 </body>
 </html>
-
