@@ -873,6 +873,39 @@ details.ov-wrap:not([open]) .ov-small-close{display:none}
 .parkalt-list[hidden]{display:none}
 .parkalt-item{height:36px;margin-top:6px;max-width:100%;font-size:12px;letter-spacing:.06em}
 .parkalt-item span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* ===== 每日行程概覽：側邊日期方格（縮小）＋行程以箭頭連接 ===== */
+.ov-day{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid #E6DED3}
+.ov-day:last-child{border-bottom:0}
+.ov-date{flex:0 0 46px;padding:5px 0;border-radius:9px;text-align:center;align-self:flex-start}
+.ov-date .dn{font-size:9px;letter-spacing:.1em}
+.ov-date .dd{font-size:13px;line-height:1.3}
+.ov-date .dw{font-size:9.5px}
+.ov-route{gap:6px 0;font-size:12px;line-height:1.6}
+.ov-chip{padding:1px 9px}
+.ov-chip small{font-size:9.5px}
+.ov-sep{padding:0 5px;font-size:11px;color:#B8AAA3}
+
+/* ===== NEXT STOP 卡片微調：淡奶茶底、較精簡高度；GO 為唯一深色區塊 ===== */
+.next{margin-top:16px;padding:17px 18px;background:#E5DDD1;color:#55433F;column-gap:16px;row-gap:10px}
+.next .k{color:#8E7D76;letter-spacing:.24em}
+.next .nm{font-size:20px;line-height:1.4;letter-spacing:.05em;margin-top:6px;color:#55433F}
+.next .mt{font-size:12px;line-height:1.6;letter-spacing:.04em;margin-top:6px;color:#70605B}
+.next .go,.next .next-done{box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;width:94px;height:32px;padding:0;border-radius:var(--rad);font-size:12px;letter-spacing:.1em}
+.next .go{gap:6px;background:#594640;border:1px solid #594640;color:#FBF8F3;box-shadow:none}
+.next .go:active{background:#493834}
+.next .next-done{gap:5px;border:1px solid rgba(89,70,64,.4);background:transparent;color:#594640;font-size:11.5px;letter-spacing:.08em}
+.next .next-done svg.i{width:9px;height:9px;padding:2.5px;border-width:1.3px}
+.next .next-done:active{background:rgba(89,70,64,.1)}
+.next .next-undo{width:38px;height:38px;border:1px solid rgba(89,70,64,.4);color:#594640}
+.next .next-undo svg.i{width:17px;height:17px}
+.next .next-undo:active{background:rgba(89,70,64,.1)}
+@media(max-width:360px){.next{padding:15px 15px;column-gap:12px}.next .nm{font-size:18.5px}}
+/* 下方 STOPS／DRIVE／START：再縮小一點 */
+.ov{padding:12px 0 11px}
+.ov+.ov{padding-left:14px}
+.ov .v{font-size:24px;margin-top:5px}
+.ov .s{font-size:11px;margin-top:2px}
 </style>
 </head>
 <body>
@@ -1037,6 +1070,7 @@ details.ov-wrap:not([open]) .ov-small-close{display:none}
        note      備註
        nav       Google Maps 搜尋字（沒填就用 name）；填 false 代表不顯示 GO 按鈕
        alt       {label:'導航至備案', q:'備案搜尋字'}（選填）
+       nocheck   true（選填）不顯示「完成」按鈕，也不計入完成進度（例如第一天抵達機場）
        walks     [['按鈕上的名稱','Google Maps 搜尋字'],…]（選填）多個地點按鈕，樣式同備案停車場；點下去直接在 Google Maps 顯示該地點（人在國外也能預覽）
        ll        [緯度,經度]，地圖才會標出；沒有就不填（概略值，僅供示意）
        detail    [['時間','09:00-17:00'],['費用','…']] 景點資訊（可展開，也會出現在「景點資訊」）
@@ -1103,13 +1137,13 @@ const PARK_NAV = {
   "白野江植物公園":["白野江植物公園 駐車場","園內停車場"],
   "莊八幡神社":["庄八幡神社 駐車場 福岡県","神社附近停車場"],
   "太宰府天滿宮":["太宰府駐車センター","太宰府駐車センター",{self:true}],
-  "由布院（湯布院）":["タイムズ湯布院第2","Times Parking Yufuin No.2（第一優先）",{alts:[["Times 湯布院（67 台）","タイムズ湯布院"],["Times 湯布院金鱗湖","タイムズ湯布院金鱗湖"]]}],
+  "由布院":["タイムズ湯布院第2","Times Parking Yufuin No.2（第一優先）",{alts:[["Times 湯布院（67 台）","タイムズ湯布院"],["Times 湯布院金鱗湖","タイムズ湯布院金鱗湖"]]}],
   "九重夢大吊橋":["九重夢大吊橋 中村駐車場","中村側停車場"],
   "別府塔":["別府タワー 駐車場","別府塔停車場"],
   "大分海洋宮殿":["うみたまご 駐車場","市營停車場"],
   "貴船城":["貴船城 大分 駐車場","附近停車場"],
   "血池地獄・龍卷地獄":["血の池地獄 駐車場","血池地獄停車場"],
-  "高千穗小火車 先買票":["高千穂あまてらす鉄道 駐車場","高千穗駅停車場"],
+  "買小火車車票":["高千穂あまてらす鉄道 駐車場","高千穗駅停車場"],
   "高千穗小火車":["高千穂あまてらす鉄道 駐車場","高千穗駅停車場"],
   "高千穗划船":["高千穂峡 御塩井駐車場","御鹽井停車場"],
   "天岩戶神社":["天岩戸神社 駐車場","神社停車場"]
@@ -1136,12 +1170,12 @@ const SPOT_INFO = {
   "莊八幡神社":{detail:[["營業時間","境內自由"],["注意","同名神社可能不只一處，請確認 GO 導航的位置"],["資料來源","網路上找不到可靠資料，請自行補充"]]},
   "太宰府天滿宮":{detail:[["參拜時間","6:30–18:30（春分日前；春分日之後 6:00 開門）"],["費用","境內免費（寶物殿、菅公歷史館另收費）"],["建議停留","90–120 分鐘（含參道吃梅ヶ枝餅）"],["參道美食","太宰府參道（表參道）沿路有多家梅枝餅（梅ヶ枝餅）店，現烤的外皮微脆、內包紅豆餡，是必吃名物"],["特色","梅花名所（花期約 1 月下旬–3 月上旬）；參道名物梅ヶ枝餅"],["注意","本殿「令和大改修」預計 2026 年春完工，請確認當時參拜動線；假日 10:30–15:30 最擁擠"],["資料來源","整理自日本旅遊網站與官方公告（2026 年資料），價格與時間可能調整，出發前請再確認官網"]],parking:"天滿宮沒有一般參拜者專用停車場，請停周邊收費停車場（太宰府駐車センター等，約 500 日圓/日；其他約 40 分 200 日圓起）；梅花季與假日容易客滿，建議提早到。"},
   "九重夢大吊橋":{detail:[["營業時間","8:30–17:00（1–6、11–12 月；入場至 16:30）；7–10 月至 18:00"],["費用","國中生以上 500 日圓；小學生 200 日圓；學齡前免費"],["建議停留","60–90 分鐘"],["特色","日本最高級人行吊橋（高約 173m、長 390m），可眺望震動之瀑"],["注意","格子狀橋面不建議穿高跟鞋；強風或結冰時可能限制入場"],["資料來源","整理自日本旅遊網站與官方公告（2026 年資料），價格與時間可能調整，出發前請再確認官網"]],parking:"中村側約 229 台、北方側約 46 台（資料未載明費用，請現場確認）。"},
-  "由布院（湯布院）":{detail:[["遊覽重點","金鱗湖、湯之坪街道、花卉村（YUFUIN FLORAL VILLAGE）"],["建議動線","停好車後步行逛湯之坪街道（約 800m 的商店街，伴手禮、甜點多），一路走到金鱗湖；花卉村是仿英國鄉村的購物區，距由布院駅約步行 18 分鐘，可依體力與時間安排"],["營業時間","各店不同，多數約 10:00–17:00"],["建議停留","2–3 小時"],["注意","週末與連假人潮多，停車場容易客滿，建議早點抵達"],["資料來源","整理自日本旅遊網站（2026 年資料），店家時間與價格可能調整，出發前請再確認"]],parking:"第一優先：Times Parking Yufuin No.2（タイムズ湯布院第2，由布市湯布院町川上 1024，約 38 台，24 小時；平日最大約 300 日圓、假日約 700–800 日圓），距湯之坪街道步行約 1 分鐘。\n備案 1：Times 湯布院（川上 3021，約 67 台，平日 700／假日 1,200 日圓）。\n備案 2：Times 湯布院金鱗湖（川上字嶽本 1600，靠近金鱗湖側）。\n3/18 為週四，車位通常比假日好找，但仍建議中午前抵達；各停車場費用可能調整，請以現場為準。"},
+  "由布院":{detail:[["遊覽重點","金鱗湖、湯之坪街道、花卉村（YUFUIN FLORAL VILLAGE）"],["建議動線","停好車後步行逛湯之坪街道（約 800m 的商店街，伴手禮、甜點多），一路走到金鱗湖；花卉村是仿英國鄉村的購物區，距由布院駅約步行 18 分鐘，可依體力與時間安排"],["營業時間","各店不同，多數約 10:00–17:00"],["建議停留","2–3 小時"],["注意","週末與連假人潮多，停車場容易客滿，建議早點抵達"],["資料來源","整理自日本旅遊網站（2026 年資料），店家時間與價格可能調整，出發前請再確認"]],parking:"第一優先：Times Parking Yufuin No.2（タイムズ湯布院第2，由布市湯布院町川上 1024，約 38 台，24 小時；平日最大約 300 日圓、假日約 700–800 日圓），距湯之坪街道步行約 1 分鐘。\n備案 1：Times 湯布院（川上 3021，約 67 台，平日 700／假日 1,200 日圓）。\n備案 2：Times 湯布院金鱗湖（川上字嶽本 1600，靠近金鱗湖側）。\n3/18 為週四，車位通常比假日好找，但仍建議中午前抵達；各停車場費用可能調整，請以現場為準。"},
   "別府塔":{detail:[["展望台時間","9:30–21:30（最終入館 21:00）"],["費用","大人 800／中高生 600／4 歲–小學生 400 日圓"],["建議停留","30–45 分鐘"],["注意","5 樓 Kitahama Deck 另收 200 日圓，雨天關閉"],["資料來源","整理自日本旅遊網站與官方公告（2026 年資料），價格與時間可能調整，出發前請再確認官網"]],parking:"別府塔停車場第 1（約 23 台）、第 2（約 81 台），展望台或別府アートミュージアム利用者可免費 1 小時；附近的ヶ浜駐車場為 24 小時營業（約 58 台）。"},
   "大分海洋宮殿":{detail:[["營業時間","9:00–17:00（最終入場 16:30；暑假與連假會延長）"],["費用","高中生以上 3,000／中小學生 1,500／4 歲以上 1,000／3 歲以下免費"],["建議停留","約 3 小時（含海豚、海象表演與あそびーち）"],["注意","不定休（每年約 3 天維護休館），出發前查營業日"],["資料來源","整理自日本旅遊網站與官方公告（2026 年資料），價格與時間可能調整，出發前請再確認官網"]],parking:"市營停車場約 800 台，普通車 420 日圓/次（與高崎山自然動物園共用）。"},
   "貴船城":{detail:[["營業時間","待確認"],["注意","請確認 GO 導航的位置"],["資料來源","網路上找不到可靠資料，請自行補充"]]},
   "血池地獄・龍卷地獄":{detail:[["營業時間","8:00–17:00（全年無休）"],["費用","各地獄約 450–500 日圓（小中學生約 200–250）；七地獄共通券約 2,400 日圓（2 日有效）"],["建議停留","兩處合計約 60–90 分鐘"],["特色","血池地獄是日本最古老的天然地獄；龍卷地獄為間歇泉，會定時噴發"],["注意","到場先看噴發時間告示；血池地獄足湯需 10 日圓硬幣"],["資料來源","整理自日本旅遊網站與官方公告（2026 年資料），價格與時間可能調整，出發前請再確認官網"]],parking:"血池地獄免費停車場約 150 台；龍卷地獄免費約 100 台。"},
-  "高千穗小火車 先買票":{detail:[["說明","早起日先到高千穗あまてらす鉄道（高千穗駅）購票或預約場次"],["營業時間","9:25–15:25（最終入場）"],["資料來源","整理自日本旅遊網站與官方公告（2026 年資料），價格與時間可能調整，出發前請再確認官網"]]},
+  "買小火車車票":{detail:[["說明","早起日先到高千穗あまてらす鉄道（高千穗駅）購票或預約場次"],["營業時間","9:25–15:25（最終入場）"],["資料來源","整理自日本旅遊網站與官方公告（2026 年資料），價格與時間可能調整，出發前請再確認官網"]]},
   "高千穗划船":{detail:[["營業時間","8:30–17:00（最終受理 16:30）；河川增水、荒天停航"],["費用","30 分鐘 1 艇約 4,100 日圓起（約 4,100–5,100，依日期而異）；定員 3 人，學齡前兒童 2 人算 1 人"],["預約","以網路預約為主：乘船日前 2 週開放，至前 2 日上午 9:00 截止；可能另有當日名額，建議先預約"],["建議停留","約 2–2.5 小時（含遊步道）"],["資料來源","整理自日本旅遊網站與官方公告（2026 年資料），價格與時間可能調整，出發前請再確認官網"]],parking:"第1御鹽井 1,000、第2あららぎ 1,000、第3大橋 800（60 分內免費）、第4押方 500 日圓，第5田口野免費；沒有貸船專用停車場，旺季容易客滿。"},
   "高千穗小火車":{detail:[["營業時間","9:25–15:25（最終入場）"],["費用","駅構內入場 100 日圓；超級卡丁車（高千穗鐵橋來回）約 2,000 日圓（以車或人計價請查官網）"],["建議停留","約 60 分鐘（乘車約 30 分鐘）"],["注意","鐵橋無法通行時會退款 500 日圓；人氣班次建議預約"],["資料來源","整理自日本旅遊網站與官方公告（2026 年資料），價格與時間可能調整，出發前請再確認官網"]]},
   "扇森稲荷神社":{detail:[["說明","九州三大稲荷之一，位於大分縣竹田市，國道57號旁有高約17m的大鳥居；朱紅鳥居連著長石階通往社殿"],["地址","大分縣竹田市拝田原桜瀬811"],["參拜費","免費"],["建議停留","約30分鐘（石階較長，帶小孩可走到中段就折返）"],["資料來源","整理自日本旅遊網站，營業與參拜時間出發前請再確認"]],parking:"設有停車場（位置與台數出發前請用 Google Maps 再確認）。"},
@@ -1164,7 +1198,7 @@ const DAY_0320 = () => ({
   ],
   stops:[
     {name:"扇森稲荷神社",type:"flex",time:"07:10",duration:"30分鐘",drive:"約1小時15分鐘",note:"長途路上的停靠點（大分縣竹田市，國道57號旁）：朱紅鳥居連著長石階，順便休息、上廁所",nav:"扇森稲荷神社 竹田市"},
-    {name:"高千穗小火車 先買票",type:"flex",time:"08:55",duration:"15分鐘",drive:"約5分鐘",note:"9:00 前到站購票（假日人多）；票選 13:00 前後的場次，剛好接在划船＋午餐之後",nav:"高千穂あまてらす鉄道 高千穂駅",ll:[32.7088,131.3003]},
+    {name:"買小火車車票",type:"flex",time:"08:55",duration:"15分鐘",drive:"約5分鐘",note:"9:00 前到站購票（假日人多）；票選 13:00 前後的場次，剛好接在划船＋午餐之後",nav:"高千穂あまてらす鉄道 高千穂駅",ll:[32.7088,131.3003]},
     {name:"高千穗划船",type:"main",time:"09:15",duration:"135分鐘（含 10:30 划船）",drive:"約5分鐘",note:"假日停車位少，9:15 前進場停車；先逛散步道，10:30 登船（約30分鐘），上岸後走回停車場約 10 分鐘",nav:"高千穂峡 貸しボート",ll:[32.704,131.304]},
     {name:"高千穗午餐",tag:"午餐",time:"11:40",duration:"60分鐘",drive:"約5分鐘",note:"高千穗市區用餐（餐廳待補）；假日午餐時段會排隊，盡量 11:40 前入座",nav:false},
     {name:"高千穗小火車",type:"flex",time:"12:50",duration:"60分鐘",drive:"約15分鐘",note:"提早 10 分鐘到站，搭 13:00 前後場次（乘車約30分鐘）",nav:"高千穂あまてらす鉄道 高千穂駅",ll:[32.7088,131.3003]},
@@ -1193,7 +1227,7 @@ const DAY_0318 = (startDrive) => ({
   stops:[
     {name:"太宰府天滿宮",type:"main",time:"09:35",duration:"120分鐘",drive:"約1小時50分鐘",note:"參拜太宰府天滿宮，逛太宰府參道、吃梅枝餅（梅ヶ枝餅）；11:35 前離開",nav:"太宰府天満宮",ll:[33.5214,130.5349]},
     {name:"九重夢大吊橋",type:"flex",time:"13:25",duration:"90分鐘（含午餐）",drive:"約50分鐘",note:"橋邊用午餐，再過橋、看震動瀑布",nav:"九重\"夢\"大吊橋",ll:[33.1801,131.2312]},
-    {name:"由布院（湯布院）",type:"main",time:"15:45",duration:"90分鐘",drive:"約40分鐘",note:"遊覽由布院：湯之坪街道、金鱗湖、花卉村；店家傍晚陸續打烊，建議 17:15 前離開",nav:"由布院駅",ll:[33.2644,131.3547]},
+    {name:"由布院",type:"main",time:"15:45",duration:"90分鐘",drive:"約40分鐘",note:"遊覽由布院：湯之坪街道、金鱗湖、花卉村；店家傍晚陸續打烊，建議 17:15 前離開",nav:"由布院駅",ll:[33.2644,131.3547]},
     {name:"回別府吃晚餐",tag:"餐廳",time:"17:55",duration:"90分鐘",drive:"約10分鐘",note:"回飯店別府吃飯",nav:false},
     {name:"別府塔",type:"flex",time:"19:35",duration:"40分鐘",drive:"約10分鐘",nav:"別府タワー",ll:[33.2808,131.5038]}
   ]
@@ -1233,8 +1267,8 @@ liu:{
   ],
   days:[
   {date:"2027-03-13",wd:"六",title:"抵達熊本・阿蘇",hotel:"熊本市區（飯店待補）",notes:[], stops:[
-    {name:"熊本機場抵達",tag:"班機",time:"10:35",duration:"80分鐘",drive:"約20分鐘",note:"10:35 抵達熊本機場",nav:false,ll:[32.8373,130.8551]},
-    {name:"租車取車",tag:"租車",time:"12:00",duration:"30分鐘",drive:"約65分鐘",note:"預估 12:00 租車（取車地點待補）",nav:false},
+    {name:"熊本機場",tag:"班機",nocheck:true,time:"10:35",duration:"80分鐘",drive:"約20分鐘",note:"10:35 抵達熊本機場",nav:false,ll:[32.8373,130.8551]},
+    {name:"取車",tag:"租車",time:"12:00",duration:"30分鐘",drive:"約65分鐘",note:"預估 12:00 租車（取車地點待補）",nav:false},
     {name:"上色見熊野座神社",type:"main",duration:"120分鐘",drive:"約40分鐘",note:"動漫電影「螢火之森」與「夏目友人帳」的靈感取景地點",nav:"上色見熊野座神社"},
     {name:"草千里之濱",type:"flex",duration:"90分鐘",drive:"約75分鐘",note:"每年2月下旬至3月上旬，當地會進行大規模的「野燒」活動來維護草原生態，3月造訪時有機會看見整片草原冒新芽的特殊景觀。",nav:"草千里ヶ浜",ll:[32.8833,131.0833]}
   ]},
@@ -1279,8 +1313,8 @@ pan:{
   ],
   days:[
   {date:"2027-03-16",wd:"二",title:"抵達福岡．美食探店",hotel:"Cross Life 博多天神",hotelStop:false,notes:["飯店附近吃飯選擇很多：屋台／一蘭總本店／Taketora 博多一口餃／居酒屋"], stops:[
-    {name:"福岡機場抵達",tag:"班機",time:"17:30",duration:"60分鐘",drive:"約20分鐘",note:"CI128 17:30 抵達福岡機場 FUK 航廈I；入境、領行李後預估 18:30 出機場",nav:false,ll:[33.5859,130.4507]},
-    {name:"租車取車",tag:"租車",duration:"40分鐘",drive:"約25分鐘",note:"出機場後租車（取車地點待補）",nav:false},
+    {name:"福岡機場",tag:"班機",nocheck:true,time:"17:30",duration:"60分鐘",drive:"約20分鐘",note:"CI128 17:30 抵達福岡機場 FUK 航廈I；入境、領行李後預估 18:30 出機場",nav:false,ll:[33.5859,130.4507]},
+    {name:"取車",tag:"租車",duration:"40分鐘",drive:"約25分鐘",note:"出機場後租車（取車地點待補）",nav:false},
     {name:"Cross Life 博多天神",tag:"住宿",duration:"30分鐘",drive:"步行約5分鐘",note:"Check in",nav:"Cross Life 博多天神"},
     {name:"飯店附近晚餐",tag:"餐廳",duration:"90分鐘",note:"屋台／一蘭總本店／Taketora 博多一口餃／居酒屋",nav:false,walks:WALKS_0316}
   ]},
@@ -1460,7 +1494,7 @@ function renderDay(){
   const d=curDay(), st=d.all, $=id=>document.getElementById(id);
   const n=days().indexOf(d)+1, pad=String(n).padStart(2,'0');
   const isDone=s=>!!progress[s.key];
-  const countable=st.filter(s=>s.tag!=='出發'), done=countable.filter(isDone).length;
+  const countable=st.filter(s=>s.tag!=='出發'&&!s.nocheck), done=countable.filter(isDone).length;
   const isOpeningTransfer=s=>!!s && (['班機','出發','住宿'].includes(s.tag) || /機場|空港|airport|飯店|ホテル|hotel/i.test(s.name||''));
   const ni=st.findIndex((s,i)=>!(i===0&&isOpeningTransfer(s))&&!isDone(s)), nx=st[ni];
   $('dayEyebrow').textContent=`DAY ${pad} ・ ${WD_EN[d.wd]}`;
@@ -1470,7 +1504,7 @@ function renderDay(){
   const mt=nx?[nx.time&&'預計 '+nx.time, ni>0&&st[ni-1].drive&&'路程 '+st[ni-1].drive].filter(Boolean).map(x=>esc(plain(x))).join(' ・ '):'';
   const canGo=nx&&navQuery(nx);
   const hasDone=st.some(isDone);
-  $('nextPanel').innerHTML=!st.length?'':nx?`<div class="next${canGo?'':' no-go'}"><div class="next-main"><div class="k">NEXT STOP ・ ${String(ni+1).padStart(2,'0')}</div><div class="nm">${esc(plain(nx.name))}</div>${mt?`<div class="mt">${mt}</div>`:''}</div><button type="button" class="next-done" id="nextDone" aria-label="標記完成">${ic('check')}<span>標記完成</span></button>${canGo?`<div class="go" id="nextGo" role="button" tabindex="0">GO${ic('go')}</div>`:''}</div>`:`<div class="next next-complete"><div class="next-main"><div class="k">COMPLETED</div><div class="nm">本日行程已全部完成</div></div>${hasDone?`<button type="button" class="next-undo" id="nextUndo" aria-label="重置本日標記" title="重置本日標記"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg></button>`:''}</div>`;
+  $('nextPanel').innerHTML=!st.length?'':nx?`<div class="next${canGo?'':' no-go'}"><div class="next-main"><div class="k">NEXT STOP ・ ${String(ni+1).padStart(2,'0')}</div><div class="nm">${esc(plain(nx.name))}</div>${mt?`<div class="mt">${mt}</div>`:''}</div><button type="button" class="next-done" id="nextDone" aria-label="完成此站">${ic('check')}<span>完成此站</span></button>${canGo?`<div class="go" id="nextGo" role="button" tabindex="0">GO${ic('go')}</div>`:''}</div>`:`<div class="next next-complete"><div class="next-main"><div class="k">COMPLETED</div><div class="nm">本日行程已全部完成</div></div>${hasDone?`<button type="button" class="next-undo" id="nextUndo" aria-label="重置本日標記" title="重置本日標記"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg></button>`:''}</div>`;
   if(nx){const g=$('nextGo');if(g)g.onclick=()=>goNav(nx);$('nextDone').onclick=()=>toggleDone(nx)}
   else{const u=$('nextUndo');if(u)u.onclick=()=>undoLast(st)}
 
@@ -1487,7 +1521,7 @@ function renderDay(){
     const hasDetail=s.detail&&s.detail.length, op=openGuides.has(s.key);
     const alt=s.alt&&s.alt.q;
     return `<div class="stop-wrapper${last?' last':''}"><div class="stop t-${s.type||'x'}${dn?' done':''}${i===ni?' current':''}" data-key="${esc(s.key)}">
-      <div class="timecol">${s.time?`<span class="time">${esc(s.time)}</span>`:''}${s.tag==='出發'?'':`<button type="button" class="check" data-act="toggle" aria-pressed="${dn}" aria-label="${dn?'取消完成':'標記完成'}">${dn?ic('check'):'完成'}</button>`}${stayChip(s)}</div>
+      <div class="timecol">${s.time?`<span class="time">${esc(s.time)}</span>`:''}${(s.tag==='出發'||s.nocheck)?'':`<button type="button" class="check" data-act="toggle" aria-pressed="${dn}" aria-label="${dn?'取消完成':'標記完成'}">${dn?ic('check'):'完成'}</button>`}${stayChip(s)}</div>
       <div class="railcol"><div class="node">${dn?ic('check'):''}</div></div>
       <div class="card"><div class="card-head"><div class="card-text">
         ${(s.type||s.tag||i===ni)?`<div class="tagrow">${pillHtml(s)}${s.tag?`<span class="tag">${esc(plain(s.tag))}</span>`:''}${i===ni?'<span class="curtag">NEXT</span>':''}</div>`:''}
@@ -1640,7 +1674,7 @@ function overviewText(){
 }
 function overviewHtml(){
   const rows=days().map((d,i)=>{
-    const chips=dayOverviewItems(d).map(o=>`<span class="ov-chip${o.flex?' flex':''}${o.hotel?' hotel':''}">${esc(o.label)}${o.flex?'<small>彈性</small>':''}</span>`).join('<span class="ov-sep">－</span>');
+    const chips=dayOverviewItems(d).map(o=>`<span class="ov-chip${o.flex?' flex':''}${o.hotel?' hotel':''}">${esc(o.label)}${o.flex?'<small>彈性</small>':''}</span>`).join('<span class="ov-sep">→</span>');
     return `<div class="ov-day"><div class="ov-date"><span class="dn">DAY ${i+1}</span><span class="dd">${esc(fmtDate(d.date).replace('.','/'))}</span><span class="dw">（${esc(d.wd)}）</span></div><div class="ov-route">${chips}</div></div>`;
   }).join('');
   return `<details class="ov-wrap"><summary><div class="ov-ttl"><b>每日行程概覽</b><small><span class="ov-small-open">點我看全部　共 ${days().length} 天</span><span class="ov-small-close">點一下收合</span></small></div><svg class="ov-chev" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></summary><div class="ov-body"><div class="ov-tools"><button type="button" class="ov-copy" id="ovCopy">複製文字</button></div>${rows}</div></details>`;
@@ -1733,3 +1767,4 @@ window.addEventListener('DOMContentLoaded',init);
 </script>
 </body>
 </html>
+
