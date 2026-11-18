@@ -846,6 +846,33 @@ details.ov-wrap:not([open]) .ov-small-close{display:none}
 .backup-card .card-bottom{margin-top:12px}
 .backup-card .go{background:var(--paper);border-color:var(--sage);color:var(--sage-d);box-shadow:none}
 .backup-card .go:active{background:var(--sage-l)}
+
+/* ===== 家庭切換按鈕：三層文字（中文提示／英文名稱／日期）=====
+   只調整文字樣式；按鈕尺寸、圓角、圓形展開動畫、選取／未選取配色邏輯皆沿用原本設定 */
+.fam{gap:4px;padding:9px 6px 9px 54px}
+.fam .fam-hint{position:relative;z-index:3;display:inline-flex;align-items:center;gap:4px;white-space:nowrap;font:400 10px/1.2 var(--sans);letter-spacing:.14em;color:#8E7D76;transition:color .3s ease}
+.fam .fam-arr{flex:none;width:9px;height:9px;fill:none;stroke:currentColor;stroke-width:1.3;stroke-linecap:round;stroke-linejoin:round;animation:famArrow 2.8s ease-in-out infinite}
+@keyframes famArrow{0%,100%{transform:translateY(-1px)}50%{transform:translateY(2px)}}
+.fam .fam-en{white-space:nowrap;font:500 15px/1.15 var(--disp);letter-spacing:.1em}
+.fam small{font:400 10px/1.2 var(--sans);letter-spacing:.1em;color:#9A8C86}
+.fam.on .fam-hint{color:#D9E0DA}
+.fam.on small{color:#D5DDD6}
+@media(hover:hover){.fam:not(.on):hover .fam-hint,.fam:not(.on):hover small{color:#fff}}
+@media(max-width:380px){.fam .fam-en{font-size:14px;letter-spacing:.08em}.fam small{letter-spacing:.06em}}
+@media(max-width:360px){.fam{padding-left:48px;padding-right:4px}.fam .fam-hint{letter-spacing:.08em}.fam small{font-size:9.5px}}
+@media(prefers-reduced-motion:reduce){.fam .fam-arr{animation:none}}
+
+/* ===== 停車導航：標示放大一點、備案停車場收合展開 ===== */
+.parkline{gap:8px;font-size:12.5px;line-height:1.55;color:var(--ink2)}
+.parkline b{width:18px;height:18px;border-radius:5px;font-size:11px}
+.parkalt{margin:2px 0 0 26px}
+.parkalt-toggle{display:inline-flex;align-items:center;gap:6px;padding:6px 0;border:0;background:none;color:var(--soft);font:400 12px/1.4 var(--sans);letter-spacing:.06em;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.parkalt-toggle svg.i{width:13px;height:13px;stroke-width:1.8;transition:transform .25s ease}
+.parkalt.open .parkalt-toggle svg.i{transform:rotate(180deg)}
+.parkalt-list{display:flex;flex-direction:column;align-items:flex-start;gap:0;padding-bottom:2px}
+.parkalt-list[hidden]{display:none}
+.parkalt-item{height:36px;margin-top:6px;max-width:100%;font-size:12px;letter-spacing:.06em}
+.parkalt-item span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 </style>
 </head>
 <body>
@@ -920,8 +947,8 @@ details.ov-wrap:not([open]) .ov-small-close{display:none}
 <section class="famsw" aria-label="切換家庭">
   <div class="famsw-hint">CHOOSE YOUR FAMILY ITINERARY ?</div>
   <div class="famsw-row">
-    <button type="button" class="fam" data-f="liu" aria-pressed="false"><span class="fam-en">LIU FAMILY</span><small>MAR 13 — MAR 21</small></button>
-    <button type="button" class="fam" data-f="pan" aria-pressed="false"><span class="fam-en">PAN FAMILY</span><small>MAR 16 — MAR 21</small></button>
+    <button type="button" class="fam" data-f="liu" aria-pressed="false"><span class="fam-hint">瑀寶家點我<svg class="fam-arr" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5L6 8l3.5-3.5"/></svg></span><span class="fam-en">LIU FAMILY</span><small>MAR 13 — MAR 21</small></button>
+    <button type="button" class="fam" data-f="pan" aria-pressed="false"><span class="fam-hint">土豆家點我<svg class="fam-arr" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5L6 8l3.5-3.5"/></svg></span><span class="fam-en">PAN FAMILY</span><small>MAR 16 — MAR 21</small></button>
   </div>
 </section>
 
@@ -1413,6 +1440,22 @@ function driveBadge(t){
 const thumbHtml=s=>{const u=(s.img||STOP_IMAGES[s.name]||'').trim();return /^https?:\/\//i.test(u)?`<div class="thumb"><img src="${esc(u)}" alt="${esc(s.name)}" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.parentElement.hidden=true"></div>`:''};
 const pillHtml=s=>s.type==='main'?'<span class="pill main">主行程</span>':s.type==='flex'?'<span class="pill flex">彈性</span>':'';
 
+var openParkAlts=new Set();
+function parkHtml(s){
+  if(!s.park) return '';
+  const alts=s.park.alts||[], open=openParkAlts.has(s.key);
+  return `<div class="parkline"><b>P</b><span>GO 導航至：${esc(s.park.label)}</span></div>`
+    +(alts.length?`<div class="parkalt${open?' open':''}"><button type="button" class="parkalt-toggle" data-act="parkalts" aria-expanded="${open}"><span>備案停車場（${alts.length}）</span><svg class="i" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button><div class="parkalt-list"${open?'':' hidden'}>${alts.map((a,i)=>`<button type="button" class="altgo parkalt-item" data-act="parkalt" data-i="${i}"><span>備${i+1}：${esc(a[0])}</span>${ic('go')}</button>`).join('')}</div></div>`:'');
+}
+function bindPark(el,s){
+  el.querySelectorAll('[data-act="parkalt"]').forEach(b=>b.onclick=()=>openMapsUrl(mapsUrl(s.park.alts[+b.dataset.i][1])));
+  const t=el.querySelector('[data-act="parkalts"]'); if(!t) return;
+  t.onclick=()=>{
+    const box=t.closest('.parkalt'), list=box.querySelector('.parkalt-list'), o=list.hidden;
+    list.hidden=!o; box.classList.toggle('open',o); t.setAttribute('aria-expanded',o);
+    o?openParkAlts.add(s.key):openParkAlts.delete(s.key);
+  };
+}
 function renderDay(){
   const d=curDay(), st=d.all, $=id=>document.getElementById(id);
   const n=days().indexOf(d)+1, pad=String(n).padStart(2,'0');
@@ -1450,7 +1493,7 @@ function renderDay(){
         ${(s.type||s.tag||i===ni)?`<div class="tagrow">${pillHtml(s)}${s.tag?`<span class="tag">${esc(plain(s.tag))}</span>`:''}${i===ni?'<span class="curtag">NEXT</span>':''}</div>`:''}
         <div class="name">${esc(plain(s.name))}</div>
         ${s.note?`<div class="note">${esc(plain(s.note))}</div>`:''}
-        ${s.park?`<div class="parkline"><b>P</b><span>GO 導航至：${esc(s.park.label)}</span></div>${(s.park.alts||[]).map((a,i)=>`<div><button type="button" class="altgo" data-act="parkalt" data-i="${i}">備案停車場：${esc(a[0])}${ic('go')}</button></div>`).join('')}`:''}
+        ${parkHtml(s)}
         ${alt?`<div><button type="button" class="altgo" data-act="alt">${esc(s.alt.label||'導航至備案')}${ic('go')}</button></div>`:''}
         ${(s.walks||[]).map((w,i)=>`<div><button type="button" class="altgo" data-act="walk" data-i="${i}">地圖：${esc(w[0])}${ic('go')}</button></div>`).join('')}
         ${stayNote(s)}</div>${thumbHtml(s)}</div>
@@ -1466,7 +1509,7 @@ function renderDay(){
     if(q('nav')) q('nav').onclick=()=>goNav(s);
     if(q('alt')) q('alt').onclick=()=>openMapsUrl(mapsUrl(s.alt.q));
     el.querySelectorAll('[data-act="walk"]').forEach(b=>b.onclick=()=>openMapsUrl(mapsUrl(s.walks[+b.dataset.i][1])));
-    el.querySelectorAll('[data-act="parkalt"]').forEach(b=>b.onclick=()=>openMapsUrl(mapsUrl(s.park.alts[+b.dataset.i][1])));
+    bindPark(el,s);
     const g=q('guide'); if(g) g.onclick=()=>{const o=!openGuides.has(s.key);o?openGuides.add(s.key):openGuides.delete(s.key);g.classList.toggle('open',o);g.closest('.guide').classList.toggle('open',o);g.setAttribute('aria-expanded',o);const gh=g.querySelector('.gh');if(gh)gh.textContent=o?'收合':'展開'};
   });
 
@@ -1478,7 +1521,7 @@ function renderDay(){
       <div class="tagrow"><span class="pill flex">備案</span>${b.duration?`<span class="tag">停留 ${esc(plain(b.duration))}</span>`:''}</div>
       <div class="name">${esc(plain(b.name))}</div>
       ${b.note?`<div class="note">${esc(plain(b.note))}</div>`:''}
-      ${b.park?`<div class="parkline"><b>P</b><span>GO 導航至：${esc(b.park.label)}</span></div>${(b.park.alts||[]).map((a,i)=>`<div><button type="button" class="altgo" data-act="parkalt" data-i="${i}">備案停車場：${esc(a[0])}${ic('go')}</button></div>`).join('')}`:''}
+      ${parkHtml(b)}
       ${b.alt&&b.alt.q?`<div><button type="button" class="altgo" data-act="alt">${esc(b.alt.label||'導航至備案')}${ic('go')}</button></div>`:''}
       ${hasDetail?`<div class="guide${op?' open':''}"><div class="guide-sheet"><button type="button" class="guidebtn${op?' open':''}" data-act="guide" aria-expanded="${op}"><span class="gl">景點資訊</span><span class="gh">${op?'收合':'展開'}</span><span class="gp" aria-hidden="true"></span></button><div class="guide-body"><div class="guide-in"><div class="guide-card">${b.detail.map(r=>`<div class="row"><b>${esc(r[0])}</b>${linkify(r[1])}</div>`).join('')}</div></div></div></div></div>`:''}
       <div class="card-bottom">${navQuery(b)?`<div class="go" data-act="nav" role="button" tabindex="0" title="Google Maps 導航">GO${ic('go')}</div>`:''}</div>
@@ -1489,7 +1532,7 @@ function renderDay(){
     const q=a=>el.querySelector(`[data-act="${a}"]`);
     if(q('nav')) q('nav').onclick=()=>goNav(b);
     if(q('alt')) q('alt').onclick=()=>openMapsUrl(mapsUrl(b.alt.q));
-    el.querySelectorAll('[data-act="parkalt"]').forEach(x=>x.onclick=()=>openMapsUrl(mapsUrl(b.park.alts[+x.dataset.i][1])));
+    bindPark(el,b);
     const g=q('guide'); if(g) g.onclick=()=>{const o=!openGuides.has(b.key);o?openGuides.add(b.key):openGuides.delete(b.key);g.classList.toggle('open',o);g.closest('.guide').classList.toggle('open',o);g.setAttribute('aria-expanded',o);const gh=g.querySelector('.gh');if(gh)gh.textContent=o?'收合':'展開'};
   });
 
@@ -1690,4 +1733,3 @@ window.addEventListener('DOMContentLoaded',init);
 </script>
 </body>
 </html>
-
