@@ -1096,7 +1096,8 @@ const HOTELS = {
   'vessel 貝塚':{short:'vessel貝塚',address:'',phone:'',checkin:'',checkout:'',nav:'vessel 貝塚 福岡'},
   'AMANEK BEPPU YULA-RE Beppu Hotel':{short:'AMANEK別府',address:'',phone:'',checkin:'',checkout:'',nav:'AMANEK BEPPU YULA-RE Beppu Hotel'},
   'KOKO HOTEL Premier Kumamoto':{short:'KOKO HOTEL熊本',address:'',phone:'',checkin:'',checkout:'',nav:'KOKO HOTEL Premier Kumamoto'},
-  'Cross Life 博多天神':{short:'CrossLife天神',address:'',phone:'',checkin:'',checkout:'',nav:'Cross Life 博多天神'}
+  'Cross Life 博多天神':{short:'CrossLife天神',address:'',phone:'',checkin:'',checkout:'',nav:'Cross Life 博多天神'},
+  'demachi4-60':{short:'demachi4-60',address:'〒860-0074 熊本，出町4-60',phone:'+819090716309',checkin:'2027 年 3 月 13 日（六）15:00～18:00',checkout:'2027 年 3 月 14 日（日）06:00～10:00',nav:'〒860-0074 熊本県熊本市出町4-60'}
 };
 
 // 景點縮圖：'景點名稱':'圖片網址'。名稱要與行程卡片上的名稱完全一致。
@@ -1266,11 +1267,17 @@ liu:{
     {dir:"回程",date:"2027年3月21日（日）",from:"熊本",to:"台北",no:"",dep:"11:30 起飛",arr:""}
   ],
   days:[
-  {date:"2027-03-13",wd:"六",title:"抵達熊本・阿蘇",hotel:"熊本市區（飯店待補）",notes:[], stops:[
-    {name:"熊本機場",tag:"班機",nocheck:true,time:"10:35",duration:"80分鐘",drive:"約20分鐘",note:"10:35 抵達熊本機場",nav:false,ll:[32.8373,130.8551]},
-    {name:"取車",tag:"租車",time:"12:00",duration:"30分鐘",drive:"約65分鐘",note:"預估 12:00 租車（取車地點待補）",nav:false},
-    {name:"上色見熊野座神社",type:"main",duration:"120分鐘",drive:"約40分鐘",note:"動漫電影「螢火之森」與「夏目友人帳」的靈感取景地點",nav:"上色見熊野座神社"},
-    {name:"草千里之濱",type:"flex",duration:"90分鐘",drive:"約75分鐘",note:"每年2月下旬至3月上旬，當地會進行「野燒」活動維護草原生態，有機會看見整片草原冒新芽的特殊景觀。",nav:"草千里ヶ浜",ll:[32.8833,131.0833]}
+  {date:"2027-03-13",wd:"六",title:"抵達熊本・阿蘇",hotel:"demachi4-60",hotelTime:"17:20",hotelNote:"預計 17:20 到達（入住時間限定 15:00～18:00）",
+    notes:[
+      "住宿限定 15:00～18:00 入住，行程以 17:20 抵達住宿為目標；若路況延誤，請務必 18:00 前到達，無法準時請提早電話聯繫住宿（+819090716309）。",
+      "全天推估時間：10:35 抵達機場 → 11:45 離開機場 → 12:05 取車 → 13:40〜14:40 上色見熊野座神社 → 15:20〜16:05 草千里之濱 → 17:20 抵達住宿。各段車程為推估值，出發前請用 Google Maps 再核對。",
+      "為了趕上入住時間，上色見熊野座神社停留縮為 60 分鐘、草千里之濱縮為 45 分鐘；若想在上色見多待一些，可以捨棄草千里之濱（彈性行程）。",
+      "這天沒有固定午餐時段，建議在機場內先吃，或取車後買輕食、在前往上色見的途中補給。"
+    ], stops:[
+    {name:"熊本機場",tag:"班機",nocheck:true,time:"10:35",duration:"70分鐘",drive:"約20分鐘",note:"10:35 抵達熊本機場；入境、領行李，午餐可在機場內先吃，11:45 前離開",nav:false,ll:[32.8373,130.8551]},
+    {name:"取車",tag:"租車",time:"12:05",duration:"30分鐘",drive:"約65分鐘",note:"預估 12:05 租車（取車地點待補）",nav:false},
+    {name:"上色見熊野座神社",type:"main",time:"13:40",duration:"60分鐘",drive:"約40分鐘",note:"動漫電影「螢火之森」與「夏目友人帳」的靈感取景地點",nav:"上色見熊野座神社"},
+    {name:"草千里之濱",type:"flex",time:"15:20",duration:"45分鐘",drive:"約75分鐘",note:"每年2月下旬至3月上旬，當地會進行「野燒」活動維護草原生態，有機會看見整片草原冒新芽的特殊景觀。",nav:"草千里ヶ浜",ll:[32.8833,131.0833]}
   ]},
   {date:"2027-03-14",wd:"日",title:"熊本採草莓．天草住一晚",hotel:"天草市（飯店待補）",startDrive:"約40分鐘",notes:[], stops:[
     {name:"Jirobei's Farm",type:"main",time:"10:00",duration:"60分鐘",drive:"約55分鐘",note:"採草莓吃到飽，有八種品種！建議官網先預約",nav:"Jirobei's Farm"},
@@ -1370,7 +1377,7 @@ function prep(){
       const di=fd.days.indexOf(d), prev=di>0?fd.days[di-1]:null;
       // 每天的起點：前一晚住的飯店（第一天則是抵達機場），起點不需要導航
       if(prev && prev.hotel) list.unshift({name:prev.hotel,tag:'出發',time:d.startTime||'',note:d.startNote||'退房出發',nav:false,drive:d.startDrive});
-      if(d.hotel && d.hotelStop!==false) list.push({name:d.hotel,tag:'住宿',note:'入住',nav:(HOTELS[d.hotel]&&HOTELS[d.hotel].nav)||(/待補/.test(d.hotel)?false:d.hotel)});
+      if(d.hotel && d.hotelStop!==false) list.push({name:d.hotel,tag:'住宿',time:d.hotelTime||'',note:d.hotelNote||'入住',nav:(HOTELS[d.hotel]&&HOTELS[d.hotel].nav)||(/待補/.test(d.hotel)?false:d.hotel)});
       d.all=list;
       (d.backup||[]).forEach(b=>{
         b.backup=true; b.type='flex'; b.key=d.date+'|備案|'+b.name;
