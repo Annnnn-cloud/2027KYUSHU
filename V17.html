@@ -1754,7 +1754,7 @@ function showInfo(){
     const rows=d.all.concat(d.backup||[]).filter(s=>s.detail&&s.detail.length);
     return rows.length?`<div class="attraction-section"><div class="attraction-day pk-day"><span class="pk-n">Day ${i+1}</span><span class="pk-date">${fmtDate(d.date).replace('.','/')}（${esc(d.wd)}）</span><span class="pk-ttl">${esc(d.title)}</span></div>${rows.map(s=>`<div class="attraction-item"><div class="attraction-name">${esc(plain(s.name))}${s.backup?'（備案）':''}</div><div class="attraction-details">${s.detail.map(r=>`<div><span class="k">${esc(r[0])}</span>${linkify(r[1])}</div>`).join('')}</div></div>`).join('')}</div>`:'';
   }).join('');
-  document.getElementById('infoBody').innerHTML=overviewHtml()+'<div class="note-block" style="margin-top:0;margin-bottom:22px">以下為網路整理的初稿（2026 年資料），價格與時間每年可能調整。<br>2026/7/28 熊本地震後，部分道路與景點可能仍有管制或調整營業，出發前請再查官方公告。</div>'+(secs||'<div class="empty">還沒有景點營業資訊。把景點的 detail 欄位填好，就會自動出現在這裡（也會出現在行程卡片的「景點資訊」）。</div>');
+  document.getElementById('infoBody').innerHTML=overviewHtml()+'<div class="note-block" style="margin-top:0;margin-bottom:22px">以下資料皆可在每日行程時間軸的「景點資訊」便籤收合查看。</div>'+(secs||'<div class="empty">還沒有景點營業資訊。把景點的 detail 欄位填好，就會自動出現在這裡（也會出現在行程卡片的「景點資訊」）。</div>');
   const oc=document.getElementById('ovCopy'); if(oc) oc.onclick=()=>copyText(overviewText(),oc);
   openModal('infoModal');
 }
@@ -1763,7 +1763,7 @@ function showParking(){
     const rows=d.all.concat(d.backup||[]).filter(s=>s.parking);
     return rows.length?`<div class="attraction-section"><div class="attraction-day pk-day"><span class="pk-n">Day ${i+1}</span><span class="pk-date">${fmtDate(d.date).replace('.','/')}（${esc(d.wd)}）</span><span class="pk-ttl">${esc(d.title)}</span></div>${rows.map(s=>`<div class="parking-section"><div class="parking-title">${esc(plain(s.name))}${s.backup?'（備案）':''}</div><div class="parking-item">${linkify(s.parking)}</div></div>`).join('')}</div>`:'';
   }).join('');
-  document.getElementById('parkingBody').innerHTML=`<div class="note-block" style="margin-top:0;margin-bottom:28px"><span class="tip-title">停車小提醒</span>— 週末與連假停車位容易滿，建議提早出發<br>— 部分景點可用「ParkingOne」等 App 預約停車位<br>— 走高速公路建議租車時加辦 ETC 卡<br>— 以下停車資料為網路整理（2026 年），GO 導航到景點本身，停車場以現場標示為準；熊本地震後部分道路與設施可能管制，出發前請查最新公告</div>`+(secs||'<div class="empty">各景點的停車資訊還沒填。把景點的 parking 欄位填好，就會自動出現在這裡。</div>');
+  document.getElementById('parkingBody').innerHTML=`<div class="note-block" style="margin-top:0;margin-bottom:28px"><span class="tip-title">停車小提醒</span>— 週末與連假停車位容易滿，建議提早出發<br>— 走高速公路建議租車時加辦 ETC 卡<br>— 停車場以現場標示為準；熊本地震後部分道路與設施可能管制，出發前請查最新公告</div>`+(secs||'<div class="empty">各景點的停車資訊還沒填。把景點的 parking 欄位填好，就會自動出現在這裡。</div>');
   openModal('parkingModal');
 }
 function showMedical(){
