@@ -910,6 +910,11 @@ details.ov-wrap:not([open]) .ov-small-close{display:none}
 /* 當日路線地圖：飯店圓點（不標號碼） */
 .map-hotel-marker{width:18px;height:18px;border-radius:50%;background:#F5F1EA;border:4px solid #55433F;box-sizing:border-box;box-shadow:0 1px 3px rgba(0,0,0,.3)}
 .maplegend .n.hotel{background:#F5F1EA;border:4px solid #55433F;box-sizing:border-box;color:transparent}
+/* 縮圖改為靠右浮動：縮圖下方的文字回到全寬，不再被提早斷行 */
+.card-head{display:block}
+.card-head::after{content:"";display:table;clear:both}
+.card-head>.thumb{float:right;margin:2px 0 8px 12px}
+.card-text{min-width:0}
 </style>
 </head>
 <body>
@@ -1568,14 +1573,14 @@ function renderDay(){
     return `<div class="stop-wrapper${last?' last':''}"><div class="stop t-${s.type||'x'}${dn?' done':''}${i===ni?' current':''}" data-key="${esc(s.key)}">
       <div class="timecol">${s.time?`<span class="time">${esc(s.time)}</span>`:''}${(s.tag==='出發'||s.nocheck)?'':`<button type="button" class="check" data-act="toggle" aria-pressed="${dn}" aria-label="${dn?'取消完成':'標記完成'}">${dn?ic('check'):'完成'}</button>`}${stayChip(s)}</div>
       <div class="railcol"><div class="node">${dn?ic('check'):''}</div></div>
-      <div class="card"><div class="card-head"><div class="card-text">
+      <div class="card"><div class="card-head">${thumbHtml(s)}<div class="card-text">
         ${(s.type||s.tag||i===ni)?`<div class="tagrow">${pillHtml(s)}${s.tag?`<span class="tag">${esc(plain(s.tag))}</span>`:''}${i===ni?'<span class="curtag">NEXT</span>':''}</div>`:''}
         <div class="name">${esc(plain(s.name))}</div>
         ${s.note?`<div class="note">${esc(plain(s.note))}</div>`:''}
         ${parkHtml(s)}
         ${alt?`<div><button type="button" class="altgo" data-act="alt">${esc(s.alt.label||'導航至備案')}${ic('go')}</button></div>`:''}
         ${(s.walks||[]).map((w,i)=>`<div><button type="button" class="altgo" data-act="walk" data-i="${i}">地圖：${esc(w[0])}${ic('go')}</button></div>`).join('')}
-        ${stayNote(s)}</div>${thumbHtml(s)}</div>
+        ${stayNote(s)}</div></div>
         ${hasDetail?`<div class="guide${op?' open':''}"><div class="guide-sheet"><button type="button" class="guidebtn${op?' open':''}" data-act="guide" aria-expanded="${op}"><span class="gl">景點資訊</span><span class="gh">${op?'收合':'展開'}</span><span class="gp" aria-hidden="true"></span></button><div class="guide-body"><div class="guide-in"><div class="guide-card">${s.detail.map(r=>`<div class="row"><b>${esc(r[0])}</b>${linkify(r[1])}</div>`).join('')}</div></div></div></div></div>`:''}
         <div class="card-bottom">${dr?driveBadge(s.drive):''}${navQuery(s)?`<div class="go" data-act="nav" role="button" tabindex="0" title="Google Maps 導航">GO${ic('go')}</div>`:''}</div>
       </div></div></div>`;
