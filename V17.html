@@ -1757,7 +1757,7 @@ function showMedical(){
   const plan=n<=7?'1～7 天 550 日圓':n<=15?'8～15 天 1,100 日圓':'16～30 天 1,650 日圓';
   const A=(h,t)=>`<a class="lnk" href="${h}" target="_blank" rel="noopener noreferrer">${t||h}</a>`;
   document.getElementById('medicalBody').innerHTML=`
-  <div class="attraction-section"><div class="attraction-day">緊急聯絡（福岡・大分・熊本）</div><div class="parking-section">
+  <div class="attraction-section"><div class="attraction-day">緊急聯絡</div><div class="parking-section">
     <div class="parking-item med-emg"><span class="med-num">🚑 119</span><span class="med-lbl">救護車／火警</span><span class="med-num">🚓 110</span><span class="med-lbl">警察</span><span class="med-sub">24 小時・免費</span></div>
     <div class="parking-item"><strong class="med-key">📞 Japan Visitor Hotline：</strong>050-3816-2787（日本政府觀光局，24 小時，可中文，協助找醫院與緊急狀況）</div>
     <div class="parking-item"><strong>🏥 找可中／英文的醫院：</strong>${A('https://www.jnto.go.jp/emergency/chc/mi_guide.html','JNTO 醫療機構查詢')}</div>
