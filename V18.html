@@ -935,6 +935,7 @@ details.ov-wrap:not([open]) .ov-small-close{display:none}
 .fl-sec-h h3{margin:0;font:500 21px/1.4 var(--serif);letter-spacing:.05em}
 .fl-sec .pack-sum{margin:0 0 18px}
 #weatherModal .modal{padding-bottom:36px}
+.wx-net{margin:0 0 14px;font-size:12.5px;line-height:1.7;color:var(--soft)}
 .wx-chips{display:flex;gap:6px;overflow-x:auto;margin:0 -4px 14px;padding:2px 4px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 .wx-chips::-webkit-scrollbar{display:none}
 .wx-chip{flex:none;min-width:56px;min-height:64px;padding:8px 4px 7px;border:1px solid var(--line2);border-radius:var(--rad);background:var(--paper);color:var(--soft);text-align:center;cursor:pointer;font-family:inherit;-webkit-tap-highlight-color:transparent;touch-action:manipulation;transition:background-color .2s ease,border-color .2s ease}
@@ -1053,7 +1054,7 @@ details.ov-wrap:not([open]) .ov-small-close{display:none}
 </section>
 
 <nav class="concierge">
-  <button class="iconbtn-top" id="flightBtn" type="button"><span class="ibc"><svg class="i" viewBox="-2 -2 28 28"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></span><span>航班資訊</span></button>
+  <button class="iconbtn-top" id="flightBtn" type="button"><span class="ibc"><svg class="i" viewBox="-1 -1 26 26"><g transform="matrix(-1 0 0 1 24 0)"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3-0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></g></svg></span><span>準備出發</span></button>
   <button class="iconbtn-top" id="infoBtn" type="button"><svg class="i" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span>景點資訊</span></button>
   <button class="iconbtn-top" id="parkingBtn" type="button"><svg class="i" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M9.5 17V8h3.2a2.7 2.7 0 0 1 0 5.4H9.5"/></svg><span>停車資訊</span></button>
   <button class="iconbtn-top" id="medicalBtn" type="button"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg><span>醫療應急</span></button>
@@ -1111,7 +1112,7 @@ details.ov-wrap:not([open]) .ov-small-close{display:none}
 <div id="infoModal" class="modal-bg"><div class="modal"><button class="modal-close" data-close type="button" aria-label="關閉"><svg class="i" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></button><h2>景點資訊詳覽</h2><div class="fambadge" data-fambadge></div><div id="infoBody"></div></div></div>
 <div id="parkingModal" class="modal-bg"><div class="modal"><button class="modal-close" data-close type="button" aria-label="關閉"><svg class="i" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></button><h2>停車資訊詳覽</h2><div class="fambadge" data-fambadge></div><div id="parkingBody"></div></div></div>
 <div id="medicalModal" class="modal-bg"><div class="modal"><button class="modal-close" data-close type="button" aria-label="關閉"><svg class="i" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></button><h2>醫療應急資訊</h2><div class="fambadge" data-fambadge></div><div id="medicalBody"></div></div></div>
-<div id="weatherModal" class="modal-bg wx-bg" role="dialog" aria-modal="true" aria-labelledby="wxTitle"><div class="modal"><button class="modal-close" data-close type="button" aria-label="關閉"><svg class="i" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></button><h2 id="wxTitle">天氣資訊</h2><div class="fambadge" data-fambadge></div><div class="wx-chips" id="wxChips" role="tablist" aria-label="日期"></div><div id="wxBody"></div></div></div>
+<div id="weatherModal" class="modal-bg wx-bg" role="dialog" aria-modal="true" aria-labelledby="wxTitle"><div class="modal"><button class="modal-close" data-close type="button" aria-label="關閉"><svg class="i" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></button><h2 id="wxTitle">天氣資訊</h2><div class="fambadge" data-fambadge></div><p class="wx-net">提醒：天氣資訊需要連上網路才能取得。</p><div class="wx-chips" id="wxChips" role="tablist" aria-label="日期"></div><div id="wxBody"></div></div></div>
 <div id="hotelModal" class="modal-bg"><div class="modal"><button class="modal-close" data-close type="button" aria-label="關閉"><svg class="i" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></button><h2 id="hotelModalTitle"></h2><div id="hotelModalContent" style="font-size:12.5px;line-height:1.8"></div></div></div>
 <div id="a2hsModal" class="modal-bg"><div class="modal"><button class="modal-close" data-close type="button" aria-label="關閉"><svg class="i" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
   <h2>如何加入手機主畫面?</h2><div class="a2-lead">讓行程像 App 一樣出現在桌面。</div>
@@ -1164,8 +1165,8 @@ const HOTELS = {
   'AMANEK BEPPU YULA-RE Beppu Hotel':{short:'AMANEK別府',address:'',phone:'',checkin:'',checkout:'',nav:'AMANEK BEPPU YULA-RE Beppu Hotel',ll:[33.280312,131.502627]},
   'KOKO HOTEL Premier Kumamoto':{short:'KOKO HOTEL熊本',address:'',phone:'',checkin:'',checkout:'',nav:'KOKO HOTEL Premier Kumamoto',ll:[32.8,130.7036]},
   'Cross Life 博多天神':{short:'CrossLife天神',address:'',phone:'',checkin:'',checkout:'',nav:'Cross Life 博多天神',ll:[33.58771,130.406658]},
-  '熊本OMO5':{short:'熊本OMO5',address:'',phone:'',checkin:'',checkout:'',nav:'OMO5熊本 by 星野リゾート'},
-  'Suikouen Hotel':{short:'Suikouen Hotel',address:'〒830-0013 福岡縣久留米市櫛原町87',phone:'',checkin:'',checkout:'',nav:'Suikouen Hotel 久留米市櫛原町87'},
+  '熊本OMO5':{short:'熊本OMO5',address:'',phone:'',checkin:'',checkout:'',nav:'OMO5熊本 by 星野リゾート',ll:[32.8035,130.7100],llApprox:true},
+  'Suikouen Hotel':{short:'Suikouen Hotel',address:'〒830-0013 福岡縣久留米市櫛原町87',phone:'',checkin:'',checkout:'',nav:'Suikouen Hotel 久留米市櫛原町87',ll:[33.3175,130.5155],llApprox:true},
   'demachi4-60':{short:'demachi4-60',address:'〒860-0074 熊本，出町4-60',phone:'+819090716309',checkin:'2027 年 3 月 13 日（六）15:00～18:00',checkout:'2027 年 3 月 14 日（日）06:00～10:00',nav:'〒860-0074 熊本県熊本市出町4-60',ll:[32.822518,130.706627],llApprox:true}
 };
 
@@ -1461,6 +1462,19 @@ const openGuides=new Set();
 let ready=false;
 
 // ---------- 資料整理：補上穩定 key、自動住宿節點 ----------
+// 地圖座標補充表：行程資料裡沒有 ll 的項目在這裡補座標（不動 FAMILY_DATA）。
+// 格式：'名稱':[緯度,經度] 預設視為「約略位置」；最後加 ,1 代表精確位置。同名但不同地點的項目用 '日期|名稱' 當 key。
+// 之後拿到確切地點，只要改這裡的數字（或在行程裡直接寫 ll），圖例就會自動拿掉「約略位置」。
+const MAP_LL = {
+  '2027-03-13|取車':[32.8385,130.8530],'2027-03-16|取車':[33.5872,130.4480],'熊本機場還車':[32.8385,130.8530],'熊本市區還車':[32.8030,130.7120],
+  '水前寺成趣園':[32.7875,130.7347,1],'CHEz Le Pain':[32.8040,130.7150],'阿蘇卡德利動物樂園':[32.9000,131.0700],
+  '勝烈亭 東バイパス保田窪店':[32.8105,130.7585],
+  'ひらい観光農園':[33.2100,130.5700],'八女中央大茶園':[33.2000,130.6200],'牛島製茶 八女本店':[33.2120,130.5585],
+  '福島八幡宮':[33.2133,130.5593],'八女福島白壁街道':[33.2120,130.5575],'水田天滿宮 戀木神社':[33.2045,130.5110],
+  '久留米鳥類中心':[33.3070,130.5290],'宮之陣神社將軍梅':[33.3440,130.5400],
+  '福岡市區會合晚餐':[33.5900,130.4020],'飯店附近晚餐':[33.5880,130.4075],'回別府吃晚餐':[33.2796,131.4995],
+  '高千穗午餐':[32.7090,131.2990],'回熊本飯店吃飯':[32.7995,130.7050],'熊本市區（飯店待補）':[32.8010,130.7060]
+};
 function prep(){
   Object.entries(FAMILY_DATA).forEach(([f,fd])=>{
     fd.days.forEach(d=>{
@@ -1484,6 +1498,7 @@ function prep(){
       list.forEach(s=>{
         const n=(seen[s.name]=(seen[s.name]||0)+1);
         s.key=d.date+'|'+s.name+(n>1?'#'+n:'');
+        if(!s.ll){const m=MAP_LL[d.date+'|'+s.name]||MAP_LL[s.name]; if(m){s.ll=[m[0],m[1]]; if(!m[2]) s.llApprox=true}}
         s.type=s.type||'';
         if(!s.ll&&s.tag==='住宿'&&HOTELS[s.name]&&HOTELS[s.name].ll){s.ll=HOTELS[s.name].ll;s.llApprox=HOTELS[s.name].llApprox}
         const si=SPOT_INFO[s.name]; if(si){ if(!s.detail&&si.detail) s.detail=si.detail; if(!s.parking&&si.parking) s.parking=si.parking; }
@@ -1712,7 +1727,7 @@ function renderMap(){
   let num=0; mapped.forEach(s=>{ s.mapNo=isHotel(s)?0:++num });
   leg.innerHTML=mapped.map(s=>isHotel(s)
     ?`<li><span class="n hotel"></span><span>${s.tag==='出發'?'出發':'住宿'}・${esc(plain(s.name))}${s.llApprox?'　<small>（約略位置）</small>':''}</span></li>`
-    :`<li><span class="n ${s.type}">${s.mapNo}</span><span>${esc(plain(s.name))}</span></li>`).join('')+missing.map(s=>`<li class="miss"><span class="n">–</span><span>${esc(plain(s.name))}　<small>（未標示在地圖上）</small></span></li>`).join('');
+    :`<li><span class="n ${s.type}">${s.mapNo}</span><span>${esc(plain(s.name))}${s.llApprox?'　<small>（約略位置）</small>':''}</span></li>`).join('')+missing.map(s=>`<li class="miss"><span class="n">–</span><span>${esc(plain(s.name))}　<small>（未標示在地圖上）</small></span></li>`).join('');
   if(!ensureMap()) return;
   layer.clearLayers();
   const pts=[];
@@ -1724,7 +1739,7 @@ function renderMap(){
     }else{
       const cls=s.type==='main'?'m-main':s.type==='flex'?'m-flex':'m-oth';
       const icon=L.divIcon({className:'map-num-marker '+cls,html:String(s.mapNo),iconSize:[26,26],iconAnchor:[13,13]});
-      L.marker(s.ll,{icon}).addTo(layer).bindPopup(`<b>${s.mapNo}. ${esc(plain(s.name))}</b>`);
+      L.marker(s.ll,{icon}).addTo(layer).bindPopup(`<b>${s.mapNo}. ${esc(plain(s.name))}</b>${s.llApprox?'<br><small>約略位置</small>':''}`);
     }
   });
   if(pts.length>1) L.polyline(pts,{color:'#8A6560',weight:2,opacity:.9,dashArray:'5,8'}).addTo(layer);
@@ -1859,15 +1874,6 @@ document.getElementById('packContent').addEventListener('change',e=>{
 // 16 天內 → 實際預報；超出預報範圍 → 近 5 年同期歷史平均（氣候參考，明確標示，不冒充預報）
 const WX_DATES=['2027-03-13','2027-03-14','2027-03-15','2027-03-16','2027-03-17','2027-03-18','2027-03-19','2027-03-20'];
 const WX_FC_DAYS=15;                       // Open-Meteo 預報最多往後約 16 天（今天＋15）
-// 行程資料沒有座標的景點／用餐點：約略位置（天氣以區域為準，畫面會標「約略位置」）
-const WX_APPROX={
-  '水前寺成趣園':[32.787,130.735],'CHEz Le Pain':[32.80,130.71],'阿蘇卡德利動物樂園':[32.90,131.08],
-  '勝烈亭 東バイパス保田窪店':[32.812,130.760],'ひらい観光農園':[33.21,130.56],'八女中央大茶園':[33.20,130.62],
-  '牛島製茶 八女本店':[33.212,130.558],'福島八幡宮':[33.213,130.559],'八女福島白壁街道':[33.213,130.559],
-  '水田天滿宮 戀木神社':[33.20,130.51],'久留米鳥類中心':[33.317,130.531],'宮之陣神社將軍梅':[33.34,130.53],
-  '福岡市區會合晚餐':[33.59,130.40],'飯店附近晚餐':[33.588,130.407],'回別府吃晚餐':[33.28,131.50],
-  '高千穗午餐':[32.709,131.300],'熊本市區還車':[32.80,130.71],'回熊本飯店吃飯':[32.80,130.71]
-};
 const WXP={
   'sun':'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2m-7.07-14.07 1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>',
   'cloud-sun':'<path d="M12 2v2M4.93 4.93l1.41 1.41M20 12h2M19.07 4.93l-1.41 1.41M15.947 12.65a4 4 0 0 0-5.925-4.128M13 22H7a5 5 0 1 1 4.9-6H13a3 3 0 0 1 0 6Z"/>',
@@ -1907,8 +1913,8 @@ const wxEn=d=>['SUN','MON','TUE','WED','THU','FRI','SAT'][new Date(d+'T00:00:00Z
 const wxLocKey=(ll)=>(+ll[0]).toFixed(2)+','+(+ll[1]).toFixed(2);
 function wxStopsOf(d){
   return (d?d.stops:[]).map(s=>{
-    const ll=s.ll||WX_APPROX[s.name]; if(!ll) return null;
-    return {s,ll,k:wxLocKey(ll),approx:!s.ll};
+    const ll=s.ll; if(!ll) return null;
+    return {s,ll,k:wxLocKey(ll),approx:!!s.llApprox};
   }).filter(Boolean);
 }
 function wxLocs(){
@@ -2115,4 +2121,3 @@ window.addEventListener('DOMContentLoaded',init);
 </script>
 </body>
 </html>
-
